@@ -10,7 +10,7 @@ describe('garage reducers', function () {
       door: 'CLOSED',
     });
   });
-  it('should respond to UNSECURE_DOOR action', function () {
+  it('should respond to UNSECURE_DOOR action in OFF state', function () {
     expect(garageReducer({
       secure: 'OFF',
       door: 'CLOSED',
@@ -18,6 +18,68 @@ describe('garage reducers', function () {
       type: 'UNSECURE_DOOR',
     })).to.deep.equal({
       secure: 'TURNING_ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should not respond to UNSECURE_DOOR action in other states', function () {
+    expect(garageReducer({
+      secure: 'TURNING_ON',
+      door: 'CLOSED',
+    }, {
+      type: 'UNSECURE_DOOR',
+    })).to.deep.equal({
+      secure: 'TURNING_ON',
+      door: 'CLOSED',
+    });
+    expect(garageReducer({
+      secure: 'ON',
+      door: 'CLOSED',
+    }, {
+      type: 'UNSECURE_DOOR',
+    })).to.deep.equal({
+      secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should respond to TURN_ON_TIMEOUT action in TURNING_ON state', function () {
+    expect(garageReducer({
+      secure: 'TURNING_ON',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_TIMEOUT',
+    })).to.deep.equal({
+      secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should not respond to TURN_ON_TIMEOUT action in other states', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_TIMEOUT',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+    expect(garageReducer({
+      secure: 'ON',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_TIMEOUT',
+    })).to.deep.equal({
+      secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should respond to SECURE_DOOR action', function () {
+    expect(garageReducer({
+      secure: 'ON',
+      door: 'CLOSED',
+    }, {
+      type: 'SECURE_DOOR',
+    })).to.deep.equal({
+      secure: 'OFF',
       door: 'CLOSED',
     });
   });
