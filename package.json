@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register"
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
