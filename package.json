@@ -1,0 +1,19 @@
+{
+  "name": "garagecontroller",
+  "version": "0.0.1",
+  "description": "Control that garage door.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callumsmits/garageController.git"
+  },
+  "author": "Callum Smits",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/callumsmits/garageController/issues"
+  },
+  "homepage": "https://github.com/callumsmits/garageController#readme"
+}
