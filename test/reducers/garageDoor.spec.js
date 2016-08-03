@@ -20,5 +20,23 @@ describe('garage door reducers', function () {
       secure: 'OFF',
       door: 'OPENING',
     });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'OPEN',
+    }, {
+      type: 'OPEN_DOOR',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPEN',
+    });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSING',
+    }, {
+      type: 'OPEN_DOOR',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPENING',
+    });
   });
 });
