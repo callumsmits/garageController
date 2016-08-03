@@ -18,4 +18,9 @@ describe('garage actions', function () {
       error: true,
     });
   });
+  it('openDoor should create OPEN_DOOR action', function () {
+    expect(actions.openDoor()).to.deep.equal({
+      type: 'OPEN_DOOR',
+    });
+  });
 });
