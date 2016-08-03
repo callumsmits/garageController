@@ -23,4 +23,29 @@ describe('garage actions', function () {
       type: 'OPEN_DOOR',
     });
   });
+  it('closeDoor should create CLOSE_DOOR action', function () {
+    expect(actions.closeDoor()).to.deep.equal({
+      type: 'CLOSE_DOOR',
+    });
+  });
+  it('unsecureDoor should create UNSECURE_DOOR action', function () {
+    expect(actions.unsecureDoor()).to.deep.equal({
+      type: 'UNSECURE_DOOR',
+    });
+  });
+  it('secureDoor should create SECURE_DOOR action', function () {
+    expect(actions.secureDoor()).to.deep.equal({
+      type: 'SECURE_DOOR',
+    });
+  });
+  it('turnOnTimeout should create TURN_ON_TIMEOUT action', function () {
+    expect(actions.turnOnTimeout()).to.deep.equal({
+      type: 'TURN_ON_TIMEOUT',
+    });
+  });
+  it('movementTimeout should create MOVEMENT_TIMEOUT action', function () {
+    expect(actions.movementTimeout()).to.deep.equal({
+      type: 'MOVEMENT_TIMEOUT',
+    });
+  });
 });
