@@ -4,7 +4,7 @@
   "description": "Control that garage door.",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register"
+    "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register",
     "test:watch": "npm test -- --watch"
   },
   "repository": {
