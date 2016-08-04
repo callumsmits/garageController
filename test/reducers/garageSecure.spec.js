@@ -50,9 +50,13 @@ describe('garage secure reducers', function () {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 1,
+        id: 143,
       },
     })).to.deep.equal({
-      secure: 'TURNING_ON',
+      secure: {
+        state: 'TURNING_ON',
+        id: 143,
+      },
       door: 'CLOSED',
     });
   });
@@ -64,6 +68,7 @@ describe('garage secure reducers', function () {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 0,
+        id: 143,
       },
     })).to.deep.equal({
       secure: 'OFF',
@@ -89,6 +94,7 @@ describe('garage secure reducers', function () {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 1,
+        id: 143,
       },
     })).to.deep.equal({
       secure: 'OFF',
@@ -97,12 +103,34 @@ describe('garage secure reducers', function () {
   });
   it('should respond to TURN_ON_TIMEOUT action in TURNING_ON state', function () {
     expect(garageReducer({
-      secure: 'TURNING_ON',
+      secure: {
+        state: 'TURNING_ON',
+        id: 143,
+      },
       door: 'CLOSED',
     }, {
       type: 'TURN_ON_TIMEOUT',
+      payload: 143,
     })).to.deep.equal({
       secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should check that state id matches id in TURN_ON_TIMEOUT action', function () {
+    expect(garageReducer({
+      secure: {
+        state: 'TURNING_ON',
+        id: 143,
+      },
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_TIMEOUT',
+      payload: 145,
+    })).to.deep.equal({
+      secure: {
+        state: 'TURNING_ON',
+        id: 143,
+      },
       door: 'CLOSED',
     });
   });

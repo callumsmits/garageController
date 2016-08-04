@@ -20,10 +20,22 @@ export const turnOnTimeout = createAction(actionTypes.TURN_ON_TIMEOUT);
 
 export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
 
+function delay(ms) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, ms);
+  });
+}
+
+export function startTurnOnTimer(id) {
+  return (dispatch) => delay(constants.garageSecureTurnOnDelay)
+                        .then(() => dispatch(turnOnTimeout(id)));
+}
+
 export function unsecureDoor() {
   return (dispatch) => {
     dispatch(turnOnRequest());
 
+    const timeId = Date.now();
     return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
       method: 'POST',
       body: JSON.stringify({
@@ -31,7 +43,11 @@ export function unsecureDoor() {
       }),
     })
     .then((res) => res.json())
-    .then((json) => dispatch(turnOnRequestComplete(json)))
-    .catch((err) => dispatch(turnOnRequestComplete(err)));
+    .then((json) => {
+      json.id = timeId;
+      dispatch(turnOnRequestComplete(json));
+    })
+    .catch((err) => dispatch(turnOnRequestComplete(err)))
+    .then(() => dispatch(startTurnOnTimer(timeId)));
   };
 }

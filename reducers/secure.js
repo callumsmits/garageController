@@ -12,11 +12,14 @@ const secure = (state = 'OFF', action) => {
         if (action.payload.secure !== 1) {
           return 'OFF';
         }
-        return 'TURNING_ON';
+        return {
+          state: 'TURNING_ON',
+          id: action.payload.id,
+        };
       }
       return state;
     case actionTypes.TURN_ON_TIMEOUT:
-      if (state === 'TURNING_ON') {
+      if ((state.state === 'TURNING_ON') && (state.id === action.payload)) {
         return 'ON';
       }
       return state;
