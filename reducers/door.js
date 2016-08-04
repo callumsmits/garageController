@@ -1,3 +1,5 @@
+import closedDistanceThreshold from '../constants';
+
 const door = (state = 'CLOSED', action) => {
   switch (action.type) {
     case 'OPEN_DOOR':
@@ -21,6 +23,10 @@ const door = (state = 'CLOSED', action) => {
         return 'UNKNOWN';
       }
       return state;
+    case 'DISTANCE':
+      if (action.payload < closedDistanceThreshold) {
+        return 'CLOSED';
+      }
     default:
       return state;
   }

@@ -124,4 +124,16 @@ describe('garage door reducers', function () {
       door: 'UNKNOWN',
     });
   });
+  it('should convert state to CLOSED with DISTANCE action below threshold', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSING',
+    }, {
+      type: 'DISTANCE',
+      payload: 10,
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+  });
 });
