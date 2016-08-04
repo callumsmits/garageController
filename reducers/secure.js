@@ -8,7 +8,13 @@ const secure = (state = 'OFF', action) => {
       }
       return state;
     case actionTypes.TURN_ON_REQUEST_COMPLETE:
-      return 'TURNING_ON';
+      if (state === 'TURN_ON_REQUEST') {
+        if (action.payload.secure !== 1) {
+          return 'OFF';
+        }
+        return 'TURNING_ON';
+      }
+      return state;
     case actionTypes.TURN_ON_TIMEOUT:
       if (state === 'TURNING_ON') {
         return 'ON';

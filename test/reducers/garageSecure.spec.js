@@ -3,6 +3,7 @@ import garageReducer from '../../reducers';
 
 const expect = chai.expect;
 
+const error = new TypeError('not a number');
 describe('garage secure reducers', function () {
   it('should handle initial state', function () {
     expect(garageReducer(undefined, {})).to.deep.equal({
@@ -52,6 +53,45 @@ describe('garage secure reducers', function () {
       },
     })).to.deep.equal({
       secure: 'TURNING_ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should check payload of TURN_ON_REQUEST_COMPLETE action', function () {
+    expect(garageReducer({
+      secure: 'TURN_ON_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_REQUEST_COMPLETE',
+      payload: {
+        secure: 0,
+      },
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+    expect(garageReducer({
+      secure: 'TURN_ON_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_REQUEST_COMPLETE',
+      payload: error,
+      error: true,
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+  });
+  it('should not respond to TURN_ON_REQUEST_COMPLETE in other states', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_REQUEST_COMPLETE',
+      payload: {
+        secure: 1,
+      },
+    })).to.deep.equal({
+      secure: 'OFF',
       door: 'CLOSED',
     });
   });

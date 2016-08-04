@@ -24,9 +24,10 @@ const door = (state = 'CLOSED', action) => {
       }
       return state;
     case 'DISTANCE':
-      if (action.payload < closedDistanceThreshold) {
+      if (action.payload < 20) {
         return 'CLOSED';
       }
+      return state;
     default:
       return state;
   }
