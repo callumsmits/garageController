@@ -28,9 +28,9 @@ describe('garage actions', function () {
       type: 'CLOSE_DOOR',
     });
   });
-  it('unsecureDoor should create UNSECURE_DOOR action', function () {
-    expect(actions.unsecureDoor()).to.deep.equal({
-      type: 'UNSECURE_DOOR',
+  it('turnOnRequest should create TURN_ON_REQUEST action', function () {
+    expect(actions.turnOnRequest()).to.deep.equal({
+      type: 'TURN_ON_REQUEST',
     });
   });
   it('secureDoor should create SECURE_DOOR action', function () {
@@ -48,8 +48,8 @@ describe('garage actions', function () {
       type: 'MOVEMENT_TIMEOUT',
     });
   });
-  it('turnOnComplete should create TURN_ON_REQUEST_COMPLETE action', function () {
-    expect(actions.turnOnComplete({
+  it('turnOnRequestComplete should create TURN_ON_REQUEST_COMPLETE action', function () {
+    expect(actions.turnOnRequestComplete({
       secure: 1,
     })).to.deep.equal({
       type: 'TURN_ON_REQUEST_COMPLETE',

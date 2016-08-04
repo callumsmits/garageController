@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes.js';
 
 const secure = (state = 'OFF', action) => {
   switch (action.type) {
-    case actionTypes.UNSECURE_DOOR:
+    case actionTypes.TURN_ON_REQUEST:
       if (state === 'OFF') {
         return 'TURN_ON_REQUEST';
       }

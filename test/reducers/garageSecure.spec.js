@@ -11,23 +11,23 @@ describe('garage secure reducers', function () {
       door: 'CLOSED',
     });
   });
-  it('should respond to UNSECURE_DOOR action in OFF state', function () {
+  it('should respond to TURN_ON_REQUEST action in OFF state', function () {
     expect(garageReducer({
       secure: 'OFF',
       door: 'CLOSED',
     }, {
-      type: 'UNSECURE_DOOR',
+      type: 'TURN_ON_REQUEST',
     })).to.deep.equal({
       secure: 'TURN_ON_REQUEST',
       door: 'CLOSED',
     });
   });
-  it('should not respond to UNSECURE_DOOR action in other states', function () {
+  it('should not respond to TURN_ON_REQUEST action in other states', function () {
     expect(garageReducer({
       secure: 'TURNING_ON',
       door: 'CLOSED',
     }, {
-      type: 'UNSECURE_DOOR',
+      type: 'TURN_ON_REQUEST',
     })).to.deep.equal({
       secure: 'TURNING_ON',
       door: 'CLOSED',
@@ -36,7 +36,7 @@ describe('garage secure reducers', function () {
       secure: 'ON',
       door: 'CLOSED',
     }, {
-      type: 'UNSECURE_DOOR',
+      type: 'TURN_ON_REQUEST',
     })).to.deep.equal({
       secure: 'ON',
       door: 'CLOSED',

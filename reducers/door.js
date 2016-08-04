@@ -1,4 +1,4 @@
-import closedDistanceThreshold from '../constants';
+import * as constants from '../constants';
 
 const door = (state = 'CLOSED', action) => {
   switch (action.type) {
@@ -24,7 +24,7 @@ const door = (state = 'CLOSED', action) => {
       }
       return state;
     case 'DISTANCE':
-      if (action.payload < 20) {
+      if (action.payload < constants.closedDistanceThreshold) {
         return 'CLOSED';
       }
       return state;
