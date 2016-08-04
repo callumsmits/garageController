@@ -1,16 +1,20 @@
+import * as actionTypes from '../actions/actionTypes.js';
+
 const secure = (state = 'OFF', action) => {
   switch (action.type) {
-    case 'UNSECURE_DOOR':
+    case actionTypes.UNSECURE_DOOR:
       if (state === 'OFF') {
-        return 'TURNING_ON';
+        return 'TURN_ON_REQUEST';
       }
       return state;
-    case 'TURN_ON_TIMEOUT':
+    case actionTypes.TURN_ON_REQUEST_COMPLETE:
+      return 'TURNING_ON';
+    case actionTypes.TURN_ON_TIMEOUT:
       if (state === 'TURNING_ON') {
         return 'ON';
       }
       return state;
-    case 'SECURE_DOOR':
+    case actionTypes.SECURE_DOOR:
       return 'OFF';
     default:
       return state;

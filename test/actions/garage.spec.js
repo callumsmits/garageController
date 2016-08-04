@@ -48,4 +48,14 @@ describe('garage actions', function () {
       type: 'MOVEMENT_TIMEOUT',
     });
   });
+  it('turnOnComplete should create TURN_ON_REQUEST_COMPLETE action', function () {
+    expect(actions.turnOnComplete({
+      secure: 1,
+    })).to.deep.equal({
+      type: 'TURN_ON_REQUEST_COMPLETE',
+      payload: {
+        secure: 1,
+      },
+    });
+  });
 });

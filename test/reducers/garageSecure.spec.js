@@ -17,7 +17,7 @@ describe('garage secure reducers', function () {
     }, {
       type: 'UNSECURE_DOOR',
     })).to.deep.equal({
-      secure: 'TURNING_ON',
+      secure: 'TURN_ON_REQUEST',
       door: 'CLOSED',
     });
   });
@@ -38,6 +38,20 @@ describe('garage secure reducers', function () {
       type: 'UNSECURE_DOOR',
     })).to.deep.equal({
       secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should respond to TURN_ON_REQUEST_COMPLETE action in TURN_ON_REQUEST state', function () {
+    expect(garageReducer({
+      secure: 'TURN_ON_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_ON_REQUEST_COMPLETE',
+      payload: {
+        secure: 1,
+      },
+    })).to.deep.equal({
+      secure: 'TURNING_ON',
       door: 'CLOSED',
     });
   });
