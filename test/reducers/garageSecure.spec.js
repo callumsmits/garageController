@@ -49,7 +49,7 @@ describe('garage secure reducers', function () {
     }, {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
-        secure: 1,
+        secure: 0,
         id: 143,
       },
     })).to.deep.equal({
@@ -67,7 +67,7 @@ describe('garage secure reducers', function () {
     }, {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
-        secure: 0,
+        secure: 1,
         id: 143,
       },
     })).to.deep.equal({
@@ -93,7 +93,7 @@ describe('garage secure reducers', function () {
     }, {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
-        secure: 1,
+        secure: 0,
         id: 143,
       },
     })).to.deep.equal({
@@ -171,6 +171,48 @@ describe('garage secure reducers', function () {
       door: 'CLOSED',
     }, {
       type: 'TURN_OFF_REQUEST',
+    })).to.deep.equal({
+      secure: 'TURNING_ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should respond to TURN_OFF_REQUEST_COMPLETE action in TURN_OFF_REQUEST state', function () {
+    expect(garageReducer({
+      secure: 'TURN_OFF_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_OFF_REQUEST_COMPLETE',
+      payload: {
+        secure: 1,
+      },
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+  });
+  it('should check TURN_OFF_REQUEST_COMPLETE payload and handle error', function () {
+    expect(garageReducer({
+      secure: 'TURN_OFF_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_OFF_REQUEST_COMPLETE',
+      payload: {
+        secure: 0,
+      },
+    })).to.deep.equal({
+      secure: 'ON',
+      door: 'CLOSED',
+    });
+  });
+  it('should not respond to TURN_OFF_REQUEST_COMPLETE action in other states', function() {
+    expect(garageReducer({
+      secure: 'TURNING_ON',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_OFF_REQUEST_COMPLETE',
+      payload: {
+        secure: 0,
+      },
     })).to.deep.equal({
       secure: 'TURNING_ON',
       door: 'CLOSED',
