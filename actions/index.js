@@ -46,8 +46,9 @@ export function unsecureDoor() {
     })
     .then((res) => res.json())
     .then((json) => {
-      json.id = timeId;
-      dispatch(turnOnRequestComplete(json));
+      const request = json;
+      request.id = timeId;
+      dispatch(turnOnRequestComplete(request));
     })
     .catch((err) => dispatch(turnOnRequestComplete(err)))
     .then(() => dispatch(startTurnOnTimer(timeId)));
