@@ -39,7 +39,7 @@ export function unsecureDoor() {
     return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
       method: 'POST',
       body: JSON.stringify({
-        secure: 1,
+        secure: 0,
       }),
     })
     .then((res) => res.json())

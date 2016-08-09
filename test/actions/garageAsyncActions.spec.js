@@ -20,15 +20,15 @@ describe('garage async actions', function () {
   it('changes secure state to TURNING_ON when state has been set on device', function () {
     nock(constants.garageDeviceAddress)
       .post(constants.garageSecureStateURL, {
-        secure: 1,
+        secure: 0,
       })
       .reply(201, {
-        secure: 1,
+        secure: 0,
       });
 
     const expectedActions = [
       { type: types.TURN_ON_REQUEST },
-      { type: types.TURN_ON_REQUEST_COMPLETE, payload: { secure: 1, id: 1 } },
+      { type: types.TURN_ON_REQUEST_COMPLETE, payload: { secure: 0, id: 1 } },
       { type: types.TURN_ON_TIMEOUT, payload: 1 },
     ];
 

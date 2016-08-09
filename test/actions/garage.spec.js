@@ -50,11 +50,11 @@ describe('garage actions', function () {
   });
   it('turnOnRequestComplete should create TURN_ON_REQUEST_COMPLETE action', function () {
     expect(actions.turnOnRequestComplete({
-      secure: 1,
+      secure: 0,
     })).to.deep.equal({
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
-        secure: 1,
+        secure: 0,
       },
     });
   });
