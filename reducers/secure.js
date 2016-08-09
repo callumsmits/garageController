@@ -9,7 +9,7 @@ const secure = (state = 'OFF', action) => {
       return state;
     case actionTypes.TURN_ON_REQUEST_COMPLETE:
       if (state === 'TURN_ON_REQUEST') {
-        if (action.payload.secure !== 1) {
+        if (action.payload.secure !== 0) {
           return 'OFF';
         }
         return {
@@ -26,6 +26,14 @@ const secure = (state = 'OFF', action) => {
     case actionTypes.TURN_OFF_REQUEST:
       if (state === 'ON') {
         return 'TURN_OFF_REQUEST';
+      }
+      return state;
+    case actionTypes.TURN_OFF_REQUEST_COMPLETE:
+      if (state === 'TURN_OFF_REQUEST') {
+        if (action.payload.secure !== 1) {
+          return 'ON';
+        }
+        return 'OFF';
       }
       return state;
     default:
