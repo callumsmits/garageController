@@ -33,11 +33,6 @@ describe('garage actions', function () {
       type: 'TURN_ON_REQUEST',
     });
   });
-  it('secureDoor should create SECURE_DOOR action', function () {
-    expect(actions.secureDoor()).to.deep.equal({
-      type: 'SECURE_DOOR',
-    });
-  });
   it('turnOnTimeout should create TURN_ON_TIMEOUT action', function () {
     expect(actions.turnOnTimeout()).to.deep.equal({
       type: 'TURN_ON_TIMEOUT',

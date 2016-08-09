@@ -18,8 +18,6 @@ export const turnOffRequest = createAction(actionTypes.TURN_OFF_REQUEST);
 
 export const turnOffRequestComplete = createAction(actionTypes.TURN_OFF_REQUEST_COMPLETE);
 
-export const secureDoor = createAction(actionTypes.SECURE_DOOR);
-
 export const turnOnTimeout = createAction(actionTypes.TURN_ON_TIMEOUT);
 
 export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
@@ -53,5 +51,23 @@ export function unsecureDoor() {
     })
     .catch((err) => dispatch(turnOnRequestComplete(err)))
     .then(() => dispatch(startTurnOnTimer(timeId)));
+  };
+}
+
+export function secureDoor() {
+  return (dispatch) => {
+    dispatch(turnOffRequest());
+
+    return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        secure: 1,
+      }),
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(turnOffRequestComplete(json));
+    })
+    .catch((err) => dispatch(turnOffRequestComplete(err)));
   };
 }

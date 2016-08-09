@@ -203,6 +203,16 @@ describe('garage secure reducers', function () {
       secure: 'ON',
       door: 'CLOSED',
     });
+    expect(garageReducer({
+      secure: 'TURN_OFF_REQUEST',
+      door: 'CLOSED',
+    }, {
+      type: 'TURN_OFF_REQUEST_COMPLETE',
+      payload: error,
+    })).to.deep.equal({
+      secure: 'ON',
+      door: 'CLOSED',
+    });
   });
   it('should not respond to TURN_OFF_REQUEST_COMPLETE action in other states', function() {
     expect(garageReducer({
