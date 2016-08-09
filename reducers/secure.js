@@ -23,8 +23,11 @@ const secure = (state = 'OFF', action) => {
         return 'ON';
       }
       return state;
-    case actionTypes.SECURE_DOOR:
-      return 'OFF';
+    case actionTypes.TURN_OFF_REQUEST:
+      if (state === 'ON') {
+        return 'TURN_OFF_REQUEST';
+      }
+      return state;
     default:
       return state;
   }

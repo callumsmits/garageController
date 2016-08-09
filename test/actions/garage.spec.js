@@ -58,4 +58,14 @@ describe('garage actions', function () {
       },
     });
   });
+  it('turnOffRequest should create TURN_OFF_REQUEST action', function () {
+    expect(actions.turnOffRequest()).to.deep.equal({
+      type: 'TURN_OFF_REQUEST',
+    });
+  });
+  it('turnOffRequestComplete should create TURN_OFF_REQUEST_COMPLETE action', function () {
+    expect(actions.turnOffRequestComplete()).to.deep.equal({
+      type: 'TURN_OFF_REQUEST_COMPLETE',
+    });
+  });
 });

@@ -14,6 +14,10 @@ export const turnOnRequest = createAction(actionTypes.TURN_ON_REQUEST);
 
 export const turnOnRequestComplete = createAction(actionTypes.TURN_ON_REQUEST_COMPLETE);
 
+export const turnOffRequest = createAction(actionTypes.TURN_OFF_REQUEST);
+
+export const turnOffRequestComplete = createAction(actionTypes.TURN_OFF_REQUEST_COMPLETE);
+
 export const secureDoor = createAction(actionTypes.SECURE_DOOR);
 
 export const turnOnTimeout = createAction(actionTypes.TURN_ON_TIMEOUT);
