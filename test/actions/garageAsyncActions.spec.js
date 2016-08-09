@@ -17,7 +17,7 @@ describe('garage async actions', function () {
     nock.cleanAll();
   });
 
-  it('changes secure state to TURNING_ON when state has been set on device', function () {
+  it('sends correct actions after unsecureDoor request', function () {
     nock(constants.garageDeviceAddress)
       .post(constants.garageSecureStateURL, {
         secure: 0,
@@ -41,6 +41,27 @@ describe('garage async actions', function () {
         if (storeActions.length > 2) {
           storeActions[2].payload = 1;
         }
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  it('sends correct actions after secureDoor request', function () {
+    nock(constants.garageDeviceAddress)
+      .post(constants.garageSecureStateURL, {
+        secure: 1,
+      })
+      .reply(201, {
+        secure: 1,
+      });
+
+    const expectedActions = [
+      { type: types.TURN_OFF_REQUEST },
+      { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
+    ];
+
+    const store = mockStore({ secure: 'ON', door: 'CLOSED' });
+    return store.dispatch(actions.secureDoor())
+      .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
   });

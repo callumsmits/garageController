@@ -30,7 +30,7 @@ const secure = (state = 'OFF', action) => {
       return state;
     case actionTypes.TURN_OFF_REQUEST_COMPLETE:
       if (state === 'TURN_OFF_REQUEST') {
-        if (action.payload.secure !== 1) {
+        if ((action.error) || (action.payload.secure !== 1)) {
           return 'ON';
         }
         return 'OFF';
