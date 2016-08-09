@@ -10,59 +10,61 @@ describe('garage door reducers', function () {
       door: 'CLOSED',
     });
   });
-  it('should handle OPEN_DOOR action', function () {
+  it('should handle OPEN_REQUEST action', function () {
     expect(garageReducer({
       secure: 'OFF',
       door: 'CLOSED',
     }, {
-      type: 'OPEN_DOOR',
+      type: 'OPEN_REQUEST',
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'OPENING',
+      door: 'OPEN_REQUEST',
     });
     expect(garageReducer({
       secure: 'OFF',
       door: 'OPEN',
     }, {
-      type: 'OPEN_DOOR',
+      type: 'OPEN_REQUEST',
     })).to.deep.equal({
       secure: 'OFF',
       door: 'OPEN',
-    });
-    expect(garageReducer({
-      secure: 'OFF',
-      door: 'CLOSING',
-    }, {
-      type: 'OPEN_DOOR',
-    })).to.deep.equal({
-      secure: 'OFF',
-      door: 'OPENING',
-    });
-    expect(garageReducer({
-      secure: 'OFF',
-      door: 'UNKNOWN',
-    }, {
-      type: 'OPEN_DOOR',
-    })).to.deep.equal({
-      secure: 'OFF',
-      door: 'MOVING',
     });
   });
-  it('should handle CLOSE_DOOR action', function () {
+  it('should handle OPEN_REQUEST_COMPLETE action', function () {
     expect(garageReducer({
       secure: 'OFF',
-      door: 'OPEN',
+      door: 'OPEN_REQUEST',
     }, {
-      type: 'CLOSE_DOOR',
+      type: 'OPEN_REQUEST_COMPLETE',
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'CLOSING',
+      door: 'OPENING',
     });
     expect(garageReducer({
       secure: 'OFF',
       door: 'CLOSED',
     }, {
-      type: 'CLOSE_DOOR',
+      type: 'OPEN_REQUEST_COMPLETE',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSED',
+    });
+  });
+  it('should handle CLOSE_REQUEST action', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'OPEN',
+    }, {
+      type: 'CLOSE_REQUEST',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'CLOSE_REQUEST',
+    });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSED',
+    }, {
+      type: 'CLOSE_REQUEST',
     })).to.deep.equal({
       secure: 'OFF',
       door: 'CLOSED',
@@ -71,19 +73,70 @@ describe('garage door reducers', function () {
       secure: 'OFF',
       door: 'OPENING',
     }, {
-      type: 'CLOSE_DOOR',
+      type: 'CLOSE_REQUEST',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPENING',
+    });
+  });
+  it('should handle CLOSE_REQUEST_COMPLETE action', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSE_REQUEST',
+    }, {
+      type: 'CLOSE_REQUEST_COMPLETE',
     })).to.deep.equal({
       secure: 'OFF',
       door: 'CLOSING',
     });
     expect(garageReducer({
       secure: 'OFF',
+      door: 'OPEN',
+    }, {
+      type: 'CLOSE_REQUEST_COMPLETE',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPEN',
+    });
+  });
+  it('should handle MOVEMENT_REQUEST action', function () {
+    expect(garageReducer({
+      secure: 'OFF',
       door: 'UNKNOWN',
     }, {
-      type: 'CLOSE_DOOR',
+      type: 'MOVEMENT_REQUEST',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'MOVEMENT_REQUEST',
+    });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'OPEN',
+    }, {
+      type: 'MOVEMENT_REQUEST',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPEN',
+    });
+  });
+  it('should handle MOVEMENT_REQUEST_COMPLETE action', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'MOVEMENT_REQUEST',
+    }, {
+      type: 'MOVEMENT_REQUEST_COMPLETE',
     })).to.deep.equal({
       secure: 'OFF',
       door: 'MOVING',
+    });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'UNKNOWN',
+    }, {
+      type: 'MOVEMENT_REQUEST_COMPLETE',
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'UNKNOWN',
     });
   });
   it('should handle MOVEMENT_TIMEOUT action', function () {
@@ -112,7 +165,7 @@ describe('garage door reducers', function () {
       type: 'MOVEMENT_TIMEOUT',
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'OPEN',
+      door: 'CLOSED',
     });
     expect(garageReducer({
       secure: 'OFF',
@@ -134,6 +187,29 @@ describe('garage door reducers', function () {
     })).to.deep.equal({
       secure: 'OFF',
       door: 'CLOSED',
+    });
+  });
+  it('should convert state to UNKNOWN with DISTANCE action' +
+    ' above threshold only if in closed state', function () {
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'CLOSED',
+    }, {
+      type: 'DISTANCE',
+      payload: 100,
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'UNKNOWN',
+    });
+    expect(garageReducer({
+      secure: 'OFF',
+      door: 'OPEN',
+    }, {
+      type: 'DISTANCE',
+      payload: 100,
+    })).to.deep.equal({
+      secure: 'OFF',
+      door: 'OPEN',
     });
   });
 });

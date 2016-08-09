@@ -8,7 +8,21 @@ export const measuredDistance = createAction(actionTypes.MEASURED_DISTANCE);
 
 export const openDoor = createAction(actionTypes.OPEN_DOOR);
 
+export const openRequest = createAction(actionTypes.OPEN_REQUEST);
+
+export const openRequestComplete = createAction(actionTypes.OPEN_REQUEST_COMPLETE);
+
 export const closeDoor = createAction(actionTypes.CLOSE_DOOR);
+
+export const closeRequest = createAction(actionTypes.CLOSE_REQUEST);
+
+export const closeRequestComplete = createAction(actionTypes.CLOSE_REQUEST_COMPLETE);
+
+export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
+
+export const movementRequest = createAction(actionTypes.MOVEMENT_REQUEST);
+
+export const movementRequestComplete = createAction(actionTypes.MOVEMENT_REQUEST_COMPLETE);
 
 export const turnOnRequest = createAction(actionTypes.TURN_ON_REQUEST);
 
@@ -20,7 +34,6 @@ export const turnOffRequestComplete = createAction(actionTypes.TURN_OFF_REQUEST_
 
 export const turnOnTimeout = createAction(actionTypes.TURN_ON_TIMEOUT);
 
-export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
 
 function delay(ms) {
   return new Promise(function (resolve) {
