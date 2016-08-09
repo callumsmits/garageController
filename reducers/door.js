@@ -2,23 +2,41 @@ import * as constants from '../constants';
 
 const door = (state = 'CLOSED', action) => {
   switch (action.type) {
-    case 'OPEN_DOOR':
-      if ((state === 'CLOSED') || (state === 'CLOSING')) {
-        return 'OPENING';
-      } else if (state === 'UNKNOWN') {
-        return 'MOVING';
+    case 'OPEN_REQUEST':
+      if (state === 'CLOSED') {
+        return 'OPEN_REQUEST';
       }
       return state;
-    case 'CLOSE_DOOR':
-      if ((state === 'OPEN') || (state === 'OPENING')) {
+    case 'OPEN_REQUEST_COMPLETE':
+      if (state === 'OPEN_REQUEST') {
+        return 'OPENING';
+      }
+      return state;
+    case 'CLOSE_REQUEST':
+      if (state === 'OPEN') {
+        return 'CLOSE_REQUEST';
+      }
+      return state;
+    case 'CLOSE_REQUEST_COMPLETE':
+      if (state === 'CLOSE_REQUEST') {
         return 'CLOSING';
-      } else if (state === 'UNKNOWN') {
+      }
+      return state;
+    case 'MOVEMENT_REQUEST':
+      if (state === 'UNKNOWN') {
+        return 'MOVEMENT_REQUEST';
+      }
+      return state;
+    case 'MOVEMENT_REQUEST_COMPLETE':
+      if (state === 'MOVEMENT_REQUEST') {
         return 'MOVING';
       }
       return state;
     case 'MOVEMENT_TIMEOUT':
-      if ((state === 'OPENING') || (state === 'CLOSING')) {
+      if (state === 'OPENING') {
         return 'OPEN';
+      } else if (state === 'CLOSING') {
+        return 'CLOSED';
       } else if (state === 'MOVING') {
         return 'UNKNOWN';
       }
