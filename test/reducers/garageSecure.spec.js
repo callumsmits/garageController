@@ -214,7 +214,7 @@ describe('garage secure reducers', function () {
       door: { position: 'CLOSED' },
     });
   });
-  it('should not respond to TURN_OFF_REQUEST_COMPLETE action in other states', function() {
+  it('should not respond to TURN_OFF_REQUEST_COMPLETE action in other states', function () {
     expect(garageReducer({
       secure: 'TURNING_ON',
       door: { position: 'CLOSED' },
