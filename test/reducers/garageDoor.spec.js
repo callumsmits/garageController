@@ -6,14 +6,14 @@ const expect = chai.expect;
 const reducerTestSecureConfig = { secure: 'OFF' };
 const reducerTestDoorConfig = [
   {
-    action: { type: 'DOOR_RELAY_ON_REQUEST' },
+    action: { type: 'DOOR_RELAY_REQUEST' },
     stateReductions: [
       {
         start: {
           door: { position: 'CLOSED' },
         },
         end: {
-          door: { position: 'CLOSED', request: 'RELAY_ON_REQUEST' },
+          door: { position: 'CLOSED', request: 'RELAY_REQUEST' },
         },
       },
       {
@@ -21,7 +21,7 @@ const reducerTestDoorConfig = [
           door: { position: 'OPEN' },
         },
         end: {
-          door: { position: 'OPEN', request: 'RELAY_ON_REQUEST' },
+          door: { position: 'OPEN', request: 'RELAY_REQUEST' },
         },
       },
       {
@@ -29,7 +29,7 @@ const reducerTestDoorConfig = [
           door: { position: 'UNKNOWN' },
         },
         end: {
-          door: { position: 'UNKNOWN', request: 'RELAY_ON_REQUEST' },
+          door: { position: 'UNKNOWN', request: 'RELAY_REQUEST' },
         },
       },
       {
@@ -43,85 +43,11 @@ const reducerTestDoorConfig = [
     ],
   },
   {
-    action: { type: 'DOOR_RELAY_ON_REQUEST_COMPLETE' },
+    action: { type: 'DOOR_RELAY_REQUEST_COMPLETE' },
     stateReductions: [
       {
         start: {
-          door: { position: 'CLOSED', request: 'RELAY_ON_REQUEST' },
-        },
-        end: {
-          door: { position: 'CLOSED', request: 'RELAY_ON' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'OPEN', request: 'RELAY_ON_REQUEST' },
-        },
-        end: {
-          door: { position: 'OPEN', request: 'RELAY_ON' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'UNKNOWN', request: 'RELAY_ON_REQUEST' },
-        },
-        end: {
-          door: { position: 'UNKNOWN', request: 'RELAY_ON' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'OPENING' },
-        },
-        end: {
-          door: { position: 'OPENING' },
-        },
-      },
-    ],
-  },
-  {
-    action: { type: 'DOOR_RELAY_OFF_REQUEST' },
-    stateReductions: [
-      {
-        start: {
-          door: { position: 'CLOSED', request: 'RELAY_ON' },
-        },
-        end: {
-          door: { position: 'CLOSED', request: 'RELAY_OFF_REQUEST' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'OPEN', request: 'RELAY_ON' },
-        },
-        end: {
-          door: { position: 'OPEN', request: 'RELAY_OFF_REQUEST' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'UNKNOWN', request: 'RELAY_ON' },
-        },
-        end: {
-          door: { position: 'UNKNOWN', request: 'RELAY_OFF_REQUEST' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'OPENING' },
-        },
-        end: {
-          door: { position: 'OPENING' },
-        },
-      },
-    ],
-  },
-  {
-    action: { type: 'DOOR_RELAY_OFF_REQUEST_COMPLETE' },
-    stateReductions: [
-      {
-        start: {
-          door: { position: 'CLOSED', request: 'RELAY_OFF_REQUEST' },
+          door: { position: 'CLOSED', request: 'RELAY_REQUEST' },
         },
         end: {
           door: { position: 'OPENING' },
@@ -129,7 +55,7 @@ const reducerTestDoorConfig = [
       },
       {
         start: {
-          door: { position: 'OPEN', request: 'RELAY_OFF_REQUEST' },
+          door: { position: 'OPEN', request: 'RELAY_REQUEST' },
         },
         end: {
           door: { position: 'CLOSING' },
@@ -137,7 +63,7 @@ const reducerTestDoorConfig = [
       },
       {
         start: {
-          door: { position: 'UNKNOWN', request: 'RELAY_OFF_REQUEST' },
+          door: { position: 'UNKNOWN', request: 'RELAY_REQUEST' },
         },
         end: {
           door: { position: 'MOVING' },

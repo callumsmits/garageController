@@ -2,34 +2,16 @@ import * as constants from '../constants';
 
 const door = (state = { position: 'CLOSED' }, action) => {
   switch (action.type) {
-    case 'DOOR_RELAY_ON_REQUEST':
+    case 'DOOR_RELAY_REQUEST':
       switch (state.position) {
         case 'OPEN':
         case 'CLOSED':
         case 'UNKNOWN':
-          return Object.assign({}, state, { request: 'RELAY_ON_REQUEST' });
+          return Object.assign({}, state, { request: 'RELAY_REQUEST' });
         default:
           return state;
       }
-    case 'DOOR_RELAY_ON_REQUEST_COMPLETE':
-      switch (state.position) {
-        case 'OPEN':
-        case 'CLOSED':
-        case 'UNKNOWN':
-          return Object.assign({}, state, { request: 'RELAY_ON' });
-        default:
-          return state;
-      }
-    case 'DOOR_RELAY_OFF_REQUEST':
-      switch (state.position) {
-        case 'OPEN':
-        case 'CLOSED':
-        case 'UNKNOWN':
-          return Object.assign({}, state, { request: 'RELAY_OFF_REQUEST' });
-        default:
-          return state;
-      }
-    case 'DOOR_RELAY_OFF_REQUEST_COMPLETE':
+    case 'DOOR_RELAY_REQUEST_COMPLETE':
       switch (state.position) {
         case 'OPEN':
           return { position: 'CLOSING' };

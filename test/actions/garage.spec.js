@@ -18,25 +18,14 @@ describe('garage actions', function () {
       error: true,
     });
   });
-  it('doorRelayOnRequest should create DOOR_RELAY_ON_REQUEST} action', function () {
-    expect(actions.doorRelayOnRequest()).to.deep.equal({
-      type: 'DOOR_RELAY_ON_REQUEST',
+  it('doorRelayRequest should create DOOR_RELAY_REQUEST} action', function () {
+    expect(actions.doorRelayRequest()).to.deep.equal({
+      type: 'DOOR_RELAY_REQUEST',
     });
   });
-  it('doorRelayOnRequestComplete should create DOOR_RELAY_ON_REQUEST_COMPLETE action', function () {
-    expect(actions.doorRelayOnRequestComplete()).to.deep.equal({
-      type: 'DOOR_RELAY_ON_REQUEST_COMPLETE',
-    });
-  });
-  it('doorRelayOffRequest should create DOOR_RELAY_OFF_REQUEST action', function () {
-    expect(actions.doorRelayOffRequest()).to.deep.equal({
-      type: 'DOOR_RELAY_OFF_REQUEST',
-    });
-  });
-  it('doorRelayOffRequestComplete should create' +
-    'DOOR_RELAY_OFF_REQUEST_COMPLETE action', function () {
-    expect(actions.doorRelayOffRequestComplete()).to.deep.equal({
-      type: 'DOOR_RELAY_OFF_REQUEST_COMPLETE',
+  it('doorRelayRequestComplete should create DOOR_RELAY_REQUEST_COMPLETE action', function () {
+    expect(actions.doorRelayRequestComplete()).to.deep.equal({
+      type: 'DOOR_RELAY_REQUEST_COMPLETE',
     });
   });
   it('closeDoor should create CLOSE_DOOR action', function () {

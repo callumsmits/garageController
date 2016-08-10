@@ -69,23 +69,15 @@ describe('garage async actions', function () {
   it('sends correct actions after triggerDoorRelay request', function () {
     nock(constants.garageDeviceAddress)
       .post(constants.garageDoorStateURL, {
-        door: 0,
-      })
-      .reply(201, {
-        door: 0,
-      })
-      .post(constants.garageDoorStateURL, {
         door: 1,
       })
-      .reply(201, {
+      .reply(200, {
         door: 1,
       });
 
     const expectedActions = [
-      { type: types.DOOR_RELAY_ON_REQUEST },
-      { type: types.DOOR_RELAY_ON_REQUEST_COMPLETE, payload: { door: 1 } },
-      { type: types.DOOR_RELAY_OFF_REQUEST },
-      { type: types.DOOR_RELAY_OFF_REQUEST_COMPLETE, payload: { door: 0 } },
+      { type: types.DOOR_RELAY_REQUEST },
+      { type: types.DOOR_RELAY_REQUEST_COMPLETE, payload: { door: 1 } },
     ];
 
     const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
