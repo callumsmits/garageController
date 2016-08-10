@@ -32,7 +32,7 @@ describe('garage async actions', function () {
       { type: types.TURN_ON_TIMEOUT, payload: 1 },
     ];
 
-    const store = mockStore({ secure: 'OFF', door: 'CLOSED' });
+    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
     return store.dispatch(actions.unsecureDoor())
       .then(() => {
         const storeActions = store.getActions();
@@ -59,8 +59,37 @@ describe('garage async actions', function () {
       { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
     ];
 
-    const store = mockStore({ secure: 'ON', door: 'CLOSED' });
+    const store = mockStore({ secure: 'ON', door: { position: 'CLOSED' } });
     return store.dispatch(actions.secureDoor())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  it('sends correct actions after triggerDoorRelay request', function () {
+    nock(constants.garageDeviceAddress)
+      .post(constants.garageDoorStateURL, {
+        door: 0,
+      })
+      .reply(201, {
+        door: 0,
+      })
+      .post(constants.garageDoorStateURL, {
+        door: 1,
+      })
+      .reply(201, {
+        door: 1,
+      });
+
+    const expectedActions = [
+      { type: types.DOOR_RELAY_ON_REQUEST },
+      { type: types.DOOR_RELAY_ON_REQUEST_COMPLETE, payload: { door: 1 } },
+      { type: types.DOOR_RELAY_OFF_REQUEST },
+      { type: types.DOOR_RELAY_OFF_REQUEST_COMPLETE, payload: { door: 0 } },
+    ];
+
+    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
+    return store.dispatch(actions.triggerDoorRelay())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });

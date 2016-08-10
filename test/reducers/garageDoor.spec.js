@@ -193,7 +193,7 @@ const reducerTestDoorConfig = [
 ];
 
 function runSingleTest(test) {
-  it(`should handle ${test.action.type} action`, function () {
+  it(`should handle ${test.action.type} action ${test.extraTitleText}`, function () {
     test.stateReductions.forEach((e) => {
       const startState = Object.assign({}, e.start, reducerTestSecureConfig);
       const expectedEndState = Object.assign({}, e.end, reducerTestSecureConfig);

@@ -84,3 +84,34 @@ export function secureDoor() {
     .catch((err) => dispatch(turnOffRequestComplete(err)));
   };
 }
+
+export function triggerDoorRelay() {
+  return (dispatch) => {
+    dispatch(doorRelayOnRequest());
+
+    return fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        door: 1,
+      }),
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(doorRelayOnRequestComplete(json));
+    })
+    .catch((err) => dispatch(doorRelayOnRequestComplete(err)))
+    .then(() => delay(constants.garageDoorMovementDelay))
+    .then(() => dispatch(doorRelayOffRequest()))
+    .then(() => fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        door: 0,
+      }),
+    }))
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(doorRelayOffRequestComplete(json));
+    })
+    .catch((err) => dispatch(doorRelayOffRequestComplete(err)));
+  };
+}
