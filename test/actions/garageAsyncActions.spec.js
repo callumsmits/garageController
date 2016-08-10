@@ -65,4 +65,25 @@ describe('garage async actions', function () {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
   });
+
+  // it('sends correct actions after openDoor request', function () {
+    // nock(constants.garageDeviceAddress)
+      // .post(constants.garageDoorStateURL, {
+        // door: 1,
+      // })
+      // .reply(201, {
+        // secure: 1,
+      // });
+
+    // const expectedActions = [
+      // { type: types.TURN_OFF_REQUEST },
+      // { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
+    // ];
+// 
+    // const store = mockStore({ secure: 'ON', door: 'CLOSED' });
+    // return store.dispatch(actions.secureDoor())
+      // .then(() => {
+        // expect(store.getActions()).to.deep.equal(expectedActions);
+      // });
+  // });
 });

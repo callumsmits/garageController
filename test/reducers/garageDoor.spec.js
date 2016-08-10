@@ -9,20 +9,36 @@ const reducerTestDoorConfig = [
     action: { type: 'DOOR_RELAY_ON_REQUEST' },
     stateReductions: [
       {
-        start: { door: 'CLOSED' },
-        end: { door: 'CLOSED_RELAY_ON_REQUEST' },
+        start: {
+          door: { position: 'CLOSED' },
+        },
+        end: {
+          door: { position: 'CLOSED', request: 'RELAY_ON_REQUEST' },
+        },
       },
       {
-        start: { door: 'OPEN' },
-        end: { door: 'OPEN_RELAY_ON_REQUEST' },
+        start: {
+          door: { position: 'OPEN' },
+        },
+        end: {
+          door: { position: 'OPEN', request: 'RELAY_ON_REQUEST' },
+        },
       },
       {
-        start: { door: 'UNKNOWN' },
-        end: { door: 'UNKNOWN_RELAY_ON_REQUEST' },
+        start: {
+          door: { position: 'UNKNOWN' },
+        },
+        end: {
+          door: { position: 'UNKNOWN', request: 'RELAY_ON_REQUEST' },
+        },
       },
       {
-        start: { door: 'OPENING' },
-        end: { door: 'OPENING' },
+        start: {
+          door: { position: 'OPENING' },
+        },
+        end: {
+          door: { position: 'OPENING' },
+        },
       },
     ],
   },
@@ -30,20 +46,36 @@ const reducerTestDoorConfig = [
     action: { type: 'DOOR_RELAY_ON_REQUEST_COMPLETE' },
     stateReductions: [
       {
-        start: { door: 'CLOSED_RELAY_ON_REQUEST' },
-        end: { door: 'CLOSED_RELAY_ON' },
+        start: {
+          door: { position: 'CLOSED', request: 'RELAY_ON_REQUEST' },
+        },
+        end: {
+          door: { position: 'CLOSED', request: 'RELAY_ON' },
+        },
       },
       {
-        start: { door: 'OPEN_RELAY_ON_REQUEST' },
-        end: { door: 'OPEN_RELAY_ON' },
+        start: {
+          door: { position: 'OPEN', request: 'RELAY_ON_REQUEST' },
+        },
+        end: {
+          door: { position: 'OPEN', request: 'RELAY_ON' },
+        },
       },
       {
-        start: { door: 'UNKNOWN_RELAY_ON_REQUEST' },
-        end: { door: 'UNKNOWN_RELAY_ON' },
+        start: {
+          door: { position: 'UNKNOWN', request: 'RELAY_ON_REQUEST' },
+        },
+        end: {
+          door: { position: 'UNKNOWN', request: 'RELAY_ON' },
+        },
       },
       {
-        start: { door: 'OPENING' },
-        end: { door: 'OPENING' },
+        start: {
+          door: { position: 'OPENING' },
+        },
+        end: {
+          door: { position: 'OPENING' },
+        },
       },
     ],
   },
@@ -51,20 +83,36 @@ const reducerTestDoorConfig = [
     action: { type: 'DOOR_RELAY_OFF_REQUEST' },
     stateReductions: [
       {
-        start: { door: 'CLOSED_RELAY_ON' },
-        end: { door: 'CLOSED_RELAY_OFF_REQUEST' },
+        start: {
+          door: { position: 'CLOSED', request: 'RELAY_ON' },
+        },
+        end: {
+          door: { position: 'CLOSED', request: 'RELAY_OFF_REQUEST' },
+        },
       },
       {
-        start: { door: 'OPEN_RELAY_ON' },
-        end: { door: 'OPEN_RELAY_OFF_REQUEST' },
+        start: {
+          door: { position: 'OPEN', request: 'RELAY_ON' },
+        },
+        end: {
+          door: { position: 'OPEN', request: 'RELAY_OFF_REQUEST' },
+        },
       },
       {
-        start: { door: 'UNKNOWN_RELAY_ON' },
-        end: { door: 'UNKNOWN_RELAY_OFF_REQUEST' },
+        start: {
+          door: { position: 'UNKNOWN', request: 'RELAY_ON' },
+        },
+        end: {
+          door: { position: 'UNKNOWN', request: 'RELAY_OFF_REQUEST' },
+        },
       },
       {
-        start: { door: 'OPENING' },
-        end: { door: 'OPENING' },
+        start: {
+          door: { position: 'OPENING' },
+        },
+        end: {
+          door: { position: 'OPENING' },
+        },
       },
     ],
   },
@@ -72,20 +120,36 @@ const reducerTestDoorConfig = [
     action: { type: 'DOOR_RELAY_OFF_REQUEST_COMPLETE' },
     stateReductions: [
       {
-        start: { door: 'CLOSED_RELAY_OFF_REQUEST' },
-        end: { door: 'CLOSING' },
+        start: {
+          door: { position: 'CLOSED', request: 'RELAY_OFF_REQUEST' },
+        },
+        end: {
+          door: { position: 'OPENING' },
+        },
       },
       {
-        start: { door: 'OPEN_RELAY_OFF_REQUEST' },
-        end: { door: 'OPENING' },
+        start: {
+          door: { position: 'OPEN', request: 'RELAY_OFF_REQUEST' },
+        },
+        end: {
+          door: { position: 'CLOSING' },
+        },
       },
       {
-        start: { door: 'UNKNOWN_RELAY_OFF_REQUEST' },
-        end: { door: 'MOVING' },
+        start: {
+          door: { position: 'UNKNOWN', request: 'RELAY_OFF_REQUEST' },
+        },
+        end: {
+          door: { position: 'MOVING' },
+        },
       },
       {
-        start: { door: 'OPENING' },
-        end: { door: 'OPENING' },
+        start: {
+          door: { position: 'OPENING' },
+        },
+        end: {
+          door: { position: 'OPENING' },
+        },
       },
     ],
   },
@@ -93,20 +157,36 @@ const reducerTestDoorConfig = [
     action: { type: 'MOVEMENT_TIMEOUT' },
     stateReductions: [
       {
-        start: { door: 'OPENING' },
-        end: { door: 'OPEN' },
+        start: {
+          door: { position: 'OPENING' },
+        },
+        end: {
+          door: { position: 'OPEN' },
+        },
       },
       {
-        start: { door: 'CLOSING' },
-        end: { door: 'CLOSED' },
+        start: {
+          door: { position: 'CLOSING' },
+        },
+        end: {
+          door: { position: 'CLOSED' },
+        },
       },
       {
-        start: { door: 'MOVING' },
-        end: { door: 'UNKNOWN' },
+        start: {
+          door: { position: 'MOVING' },
+        },
+        end: {
+          door: { position: 'UNKNOWN' },
+        },
       },
       {
-        start: { door: 'CLOSED' },
-        end: { door: 'CLOSED' },
+        start: {
+          door: { position: 'CLOSED' },
+        },
+        end: {
+          door: { position: 'CLOSED' },
+        },
       },
     ],
   },
@@ -126,7 +206,9 @@ describe('garage door reducers', function () {
   it('should handle initial state', function () {
     expect(garageReducer(undefined, {})).to.deep.equal({
       secure: 'OFF',
-      door: 'CLOSED',
+      door: {
+        position: 'CLOSED',
+      },
     });
   });
 
@@ -137,36 +219,36 @@ describe('garage door reducers', function () {
   it('should convert state to CLOSED with DISTANCE action below threshold', function () {
     expect(garageReducer({
       secure: 'OFF',
-      door: 'CLOSING',
+      door: { position: 'UNKNOWN' },
     }, {
       type: 'DISTANCE',
       payload: 10,
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'CLOSED',
+      door: { position: 'CLOSED' },
     });
   });
   it('should convert state to UNKNOWN with DISTANCE action' +
     ' above threshold only if in closed state', function () {
     expect(garageReducer({
       secure: 'OFF',
-      door: 'CLOSED',
+      door: { position: 'CLOSED' },
     }, {
       type: 'DISTANCE',
       payload: 100,
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'UNKNOWN',
+      door: { position: 'UNKNOWN' },
     });
     expect(garageReducer({
       secure: 'OFF',
-      door: 'OPEN',
+      door: { position: 'OPEN' },
     }, {
       type: 'DISTANCE',
       payload: 100,
     })).to.deep.equal({
       secure: 'OFF',
-      door: 'OPEN',
+      door: { position: 'OPEN' },
     });
   });
 });
