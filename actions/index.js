@@ -6,17 +6,16 @@ import * as actionTypes from './actionTypes.js';
 
 export const measuredDistance = createAction(actionTypes.MEASURED_DISTANCE);
 
-export const openDoor = createAction(actionTypes.OPEN_DOOR);
+export const doorRelayOnRequest = createAction(actionTypes.DOOR_RELAY_ON_REQUEST);
 
-export const openRequest = createAction(actionTypes.OPEN_REQUEST);
+export const doorRelayOnRequestComplete = createAction(actionTypes.DOOR_RELAY_ON_REQUEST_COMPLETE);
 
-export const openRequestComplete = createAction(actionTypes.OPEN_REQUEST_COMPLETE);
+export const doorRelayOffRequest = createAction(actionTypes.DOOR_RELAY_OFF_REQUEST);
+
+export const doorRelayOffRequestComplete =
+createAction(actionTypes.DOOR_RELAY_OFF_REQUEST_COMPLETE);
 
 export const closeDoor = createAction(actionTypes.CLOSE_DOOR);
-
-export const closeRequest = createAction(actionTypes.CLOSE_REQUEST);
-
-export const closeRequestComplete = createAction(actionTypes.CLOSE_REQUEST_COMPLETE);
 
 export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
 

@@ -12,3 +12,10 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export const garageSecureTurnOnDelay = turnOnDelay;
+
+let doorMovementDelay = 25000;
+if (process.env.NODE_ENV === 'test') {
+  doorMovementDelay = 30;
+}
+
+export const garageDoorMovementDelay = doorMovementDelay;
