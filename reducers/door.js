@@ -1,52 +1,44 @@
 import * as constants from '../constants';
 
-const door = (state = 'CLOSED', action) => {
+const door = (state = { position: 'CLOSED' }, action) => {
   switch (action.type) {
-    case 'OPEN_REQUEST':
-      if (state === 'CLOSED') {
-        return 'OPEN_REQUEST';
+    case 'DOOR_RELAY_REQUEST':
+      switch (state.position) {
+        case 'OPEN':
+        case 'CLOSED':
+        case 'UNKNOWN':
+          return Object.assign({}, state, { request: 'RELAY_REQUEST' });
+        default:
+          return state;
       }
-      return state;
-    case 'OPEN_REQUEST_COMPLETE':
-      if (state === 'OPEN_REQUEST') {
-        return 'OPENING';
+    case 'DOOR_RELAY_REQUEST_COMPLETE':
+      switch (state.position) {
+        case 'OPEN':
+          return { position: 'CLOSING' };
+        case 'CLOSED':
+          return { position: 'OPENING' };
+        case 'UNKNOWN':
+          return { position: 'MOVING' };
+        default:
+          return state;
       }
-      return state;
-    case 'CLOSE_REQUEST':
-      if (state === 'OPEN') {
-        return 'CLOSE_REQUEST';
-      }
-      return state;
-    case 'CLOSE_REQUEST_COMPLETE':
-      if (state === 'CLOSE_REQUEST') {
-        return 'CLOSING';
-      }
-      return state;
-    case 'MOVEMENT_REQUEST':
-      if (state === 'UNKNOWN') {
-        return 'MOVEMENT_REQUEST';
-      }
-      return state;
-    case 'MOVEMENT_REQUEST_COMPLETE':
-      if (state === 'MOVEMENT_REQUEST') {
-        return 'MOVING';
-      }
-      return state;
     case 'MOVEMENT_TIMEOUT':
-      if (state === 'OPENING') {
-        return 'OPEN';
-      } else if (state === 'CLOSING') {
-        return 'CLOSED';
-      } else if (state === 'MOVING') {
-        return 'UNKNOWN';
+      switch (state.position) {
+        case 'OPENING':
+          return { position: 'OPEN' };
+        case 'CLOSING':
+          return { position: 'CLOSED' };
+        case 'MOVING':
+          return { position: 'UNKNOWN' };
+        default:
+          return state;
       }
-      return state;
     case 'DISTANCE':
       if (action.payload < constants.closedDistanceThreshold) {
-        return 'CLOSED';
+        return { position: 'CLOSED' };
       }
-      if ((state === 'CLOSED') && (action.payload > constants.closedDistanceThreshold)) {
-        return 'UNKNOWN';
+      if ((state.position === 'CLOSED') && (action.payload > constants.closedDistanceThreshold)) {
+        return { position: 'UNKNOWN' };
       }
       return state;
     default:

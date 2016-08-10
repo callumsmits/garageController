@@ -6,17 +6,11 @@ import * as actionTypes from './actionTypes.js';
 
 export const measuredDistance = createAction(actionTypes.MEASURED_DISTANCE);
 
-export const openDoor = createAction(actionTypes.OPEN_DOOR);
+export const doorRelayRequest = createAction(actionTypes.DOOR_RELAY_REQUEST);
 
-export const openRequest = createAction(actionTypes.OPEN_REQUEST);
-
-export const openRequestComplete = createAction(actionTypes.OPEN_REQUEST_COMPLETE);
+export const doorRelayRequestComplete = createAction(actionTypes.DOOR_RELAY_REQUEST_COMPLETE);
 
 export const closeDoor = createAction(actionTypes.CLOSE_DOOR);
-
-export const closeRequest = createAction(actionTypes.CLOSE_REQUEST);
-
-export const closeRequestComplete = createAction(actionTypes.CLOSE_REQUEST_COMPLETE);
 
 export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
 
@@ -83,5 +77,23 @@ export function secureDoor() {
       dispatch(turnOffRequestComplete(json));
     })
     .catch((err) => dispatch(turnOffRequestComplete(err)));
+  };
+}
+
+export function triggerDoorRelay() {
+  return (dispatch) => {
+    dispatch(doorRelayRequest());
+
+    return fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        door: 1,
+      }),
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(doorRelayRequestComplete(json));
+    })
+    .catch((err) => dispatch(doorRelayRequestComplete(err)));
   };
 }
