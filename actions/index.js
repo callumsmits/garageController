@@ -97,3 +97,10 @@ export function triggerDoorRelay() {
     .catch((err) => dispatch(doorRelayRequestComplete(err)));
   };
 }
+
+export function openDoor() {
+  return (dispatch) =>
+    dispatch(triggerDoorRelay())
+    .then(() => delay(constants.garageDoorMovementDelay))
+    .then(() => dispatch(movementTimeout()))
+}
