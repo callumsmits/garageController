@@ -3,6 +3,8 @@ import garageReducer from '../../reducers';
 
 const expect = chai.expect;
 
+const error = new TypeError('not a number');
+
 const reducerTestSecureConfig = { secure: 'OFF' };
 const reducerTestDoorConfig = [
   {
@@ -75,6 +77,36 @@ const reducerTestDoorConfig = [
         },
         end: {
           door: { position: 'OPENING' },
+        },
+      },
+    ],
+  },
+  {
+    action: { type: 'DOOR_RELAY_REQUEST_COMPLETE', payload: error, error: true },
+    extraTitleText: 'with error appropriately',
+    stateReductions: [
+      {
+        start: {
+          door: { position: 'CLOSED', request: 'RELAY_REQUEST' },
+        },
+        end: {
+          door: { position: 'CLOSED' },
+        },
+      },
+      {
+        start: {
+          door: { position: 'OPEN', request: 'RELAY_REQUEST' },
+        },
+        end: {
+          door: { position: 'OPEN' },
+        },
+      },
+      {
+        start: {
+          door: { position: 'UNKNOWN', request: 'RELAY_REQUEST' },
+        },
+        end: {
+          door: { position: 'UNKNOWN' },
         },
       },
     ],

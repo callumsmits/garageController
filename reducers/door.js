@@ -12,6 +12,9 @@ const door = (state = { position: 'CLOSED' }, action) => {
           return state;
       }
     case 'DOOR_RELAY_REQUEST_COMPLETE':
+      if (action.error) {
+        return { position: state.position };
+      }
       switch (state.position) {
         case 'OPEN':
           return { position: 'CLOSING' };
