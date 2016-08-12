@@ -3,7 +3,8 @@ module.exports = {
 	'rules': {},
 	"env": {
 		"browser": true,
-	    "node": true
+	    "node": true,
+	    "mocha": true
 	},
 	'plugins': [
 		'react'
