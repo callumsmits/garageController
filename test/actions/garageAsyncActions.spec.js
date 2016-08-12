@@ -87,24 +87,47 @@ describe('garage async actions', function () {
       });
   });
 
-  // it('sends correct actions after openDoor request', function () {
-    // nock(constants.garageDeviceAddress)
-      // .post(constants.garageDoorStateURL, {
-        // door: 1,
-      // })
-      // .reply(201, {
-        // secure: 1,
-      // });
+  it('sends correct actions after openDoor request', function () {
+    nock(constants.garageDeviceAddress)
+      .post(constants.garageDoorStateURL, {
+        door: 1,
+      })
+      .reply(200, {
+        door: 1,
+      });
 
-    // const expectedActions = [
-      // { type: types.TURN_OFF_REQUEST },
-      // { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
-    // ];
-// 
-    // const store = mockStore({ secure: 'ON', door: 'CLOSED' });
-    // return store.dispatch(actions.secureDoor())
-      // .then(() => {
-        // expect(store.getActions()).to.deep.equal(expectedActions);
-      // });
-  // });
+    const expectedActions = [
+      { type: types.DOOR_RELAY_REQUEST },
+      { type: types.DOOR_RELAY_REQUEST_COMPLETE, payload: { door: 1 } },
+      { type: types.MOVEMENT_TIMEOUT },
+    ];
+
+    const store = mockStore({ secure: 'ON', door: 'CLOSED' });
+    return store.dispatch(actions.openDoor())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  it('sends correct actions after closeDoor request', function () {
+    nock(constants.garageDeviceAddress)
+      .post(constants.garageDoorStateURL, {
+        door: 1,
+      })
+      .reply(200, {
+        door: 1,
+      });
+
+    const expectedActions = [
+      { type: types.DOOR_RELAY_REQUEST },
+      { type: types.DOOR_RELAY_REQUEST_COMPLETE, payload: { door: 1 } },
+      { type: types.MOVEMENT_TIMEOUT },
+    ];
+
+    const store = mockStore({ secure: 'ON', door: 'OPEN' });
+    return store.dispatch(actions.closeDoor())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
 });

@@ -10,8 +10,6 @@ export const doorRelayRequest = createAction(actionTypes.DOOR_RELAY_REQUEST);
 
 export const doorRelayRequestComplete = createAction(actionTypes.DOOR_RELAY_REQUEST_COMPLETE);
 
-export const closeDoor = createAction(actionTypes.CLOSE_DOOR);
-
 export const movementTimeout = createAction(actionTypes.MOVEMENT_TIMEOUT);
 
 export const movementRequest = createAction(actionTypes.MOVEMENT_REQUEST);
@@ -96,4 +94,18 @@ export function triggerDoorRelay() {
     })
     .catch((err) => dispatch(doorRelayRequestComplete(err)));
   };
+}
+
+export function openDoor() {
+  return (dispatch) =>
+    dispatch(triggerDoorRelay())
+    .then(() => delay(constants.garageDoorMovementDelay))
+    .then(() => dispatch(movementTimeout()));
+}
+
+export function closeDoor() {
+  return (dispatch) =>
+    dispatch(triggerDoorRelay())
+    .then(() => delay(constants.garageDoorMovementDelay))
+    .then(() => dispatch(movementTimeout()));
 }

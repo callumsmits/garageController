@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const error = new TypeError('not a number');
 describe('garage actions', function () {
-  it('measuredDistance should create MEASURED_DISTANCE action', function() {
+  it('measuredDistance should create MEASURED_DISTANCE action', function () {
     expect(actions.measuredDistance(5)).to.deep.equal({
       type: 'MEASURED_DISTANCE',
       payload: 5,
@@ -26,11 +26,6 @@ describe('garage actions', function () {
   it('doorRelayRequestComplete should create DOOR_RELAY_REQUEST_COMPLETE action', function () {
     expect(actions.doorRelayRequestComplete()).to.deep.equal({
       type: 'DOOR_RELAY_REQUEST_COMPLETE',
-    });
-  });
-  it('closeDoor should create CLOSE_DOOR action', function () {
-    expect(actions.closeDoor()).to.deep.equal({
-      type: 'CLOSE_DOOR',
     });
   });
   it('movementTimeout should create MOVEMENT_TIMEOUT action', function () {
