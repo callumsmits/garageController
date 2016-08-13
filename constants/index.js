@@ -19,3 +19,10 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export const garageDoorMovementDelay = doorMovementDelay;
+
+let secureToMoveDelay = 1000;
+if (process.env.NODE_ENV === 'test') {
+  secureToMoveDelay = 10;
+}
+
+export const garageSecureToMoveDelay = secureToMoveDelay;

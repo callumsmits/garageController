@@ -1,8 +1,14 @@
 import React from 'react';
 
+import Header from './header.jsx';
+import CurrentStateDisplay from '../containers/currentStateDisplay.jsx';
+import CurrentStateChangeButton from '../containers/currentStateChangeButton.jsx';
+
 const App = () => (
   <div>
-    <h1>Hello</h1>
+    <Header />
+    <CurrentStateDisplay />
+    <CurrentStateChangeButton />
   </div>
 );
 

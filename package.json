@@ -7,7 +7,7 @@
     "build": "./node_modules/.bin/webpack",
     "webpack-dev-server": "./node_modules/.bin/webpack-dev-server --hot --inline --host 0.0.0.0",
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register && karma start --single-run",
-    "test:watch": "npm test -- --watch"
+    "testwatch": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register -w & karma start"
   },
   "repository": {
     "type": "git",

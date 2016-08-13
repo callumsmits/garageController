@@ -1,15 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import garageReducer from '../reducers/index.js';
+import App from '../components/app.jsx';
 
-let store = createStore(garageReducer);
+let store = createStore(garageReducer, undefined, compose(
+  applyMiddleware(thunk),
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
 const root = document.createElement('div');
 document.body.appendChild(root);
 render(
   <Provider store={store}>
-    <h1>Hello</h1>
+    <App />
   </Provider>
   , root);
