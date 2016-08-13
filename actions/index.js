@@ -109,3 +109,31 @@ export function closeDoor() {
     .then(() => delay(constants.garageDoorMovementDelay))
     .then(() => dispatch(movementTimeout()));
 }
+
+export function unsecureAndOpenDoor() {
+  return (dispatch, getState) =>
+    dispatch(unsecureDoor())
+    .then(() => delay(constants.garageSecureToMoveDelay))
+    .then(() => {
+      const { secure } = getState();
+
+      if (secure === 'ON') {
+        return dispatch(openDoor());
+      }
+      return {};
+    }
+  );
+}
+
+export function closeAndSecureDoor() {
+  return (dispatch, getState) =>
+    dispatch(closeDoor())
+    .then(() => delay(constants.garageSecureToMoveDelay))
+    .then(() => {
+      const { door } = getState();
+      if (door.position === 'CLOSED') {
+        return dispatch(secureDoor());
+      }
+      return {};
+    });
+}
