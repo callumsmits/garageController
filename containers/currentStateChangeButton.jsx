@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { openDoor, closeDoor } from '../actions';
+import { unsecureAndOpenDoor, closeAndSecureDoor } from '../actions';
 import StateChangeButton from '../components/stateChangeButton.jsx';
 
 const mapStateToProps = (state) => {
@@ -10,11 +10,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let actionToDispatch = openDoor;
+  let actionToDispatch = unsecureAndOpenDoor;
   if (ownProps.door === 'Closed') {
-    actionToDispatch = openDoor;
+    actionToDispatch = unsecureAndOpenDoor;
   } else if (ownProps.door === 'Open') {
-    actionToDispatch = closeDoor;
+    actionToDispatch = closeAndSecureDoor;
   }
   return {
     onStateButtonClick: () => {

@@ -124,3 +124,16 @@ export function unsecureAndOpenDoor() {
     }
   );
 }
+
+export function closeAndSecureDoor() {
+  return (dispatch, getState) =>
+    dispatch(closeDoor())
+    .then(() => delay(constants.garageSecureToMoveDelay))
+    .then(() => {
+      const { door } = getState();
+      if (door.position === 'CLOSED') {
+        return dispatch(secureDoor());
+      }
+      return {};
+    });
+}
