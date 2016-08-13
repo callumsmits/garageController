@@ -15,7 +15,7 @@ describe('<StateDisplay />', function () {
     expect(wrapper.find('h2').text()).to.equal('Closed');
   });
 
-  it('should render states appropriately', function () {
+  it('should render door states appropriately', function () {
     const wrapper = shallow(<StateDisplay doorState="OPEN" secureState="SECURE" />);
     expect(wrapper.find('h2').text()).to.equal('Open');
     const wrapperOpening = shallow(<StateDisplay doorState="OPENING" secureState="SECURE" />);
@@ -25,4 +25,5 @@ describe('<StateDisplay />', function () {
     const wrapperUnknown = shallow(<StateDisplay doorState="UNKNOWN" secureState="SECURE" />);
     expect(wrapperUnknown.find('h2').text()).to.equal('Unknown');
   });
+
 });

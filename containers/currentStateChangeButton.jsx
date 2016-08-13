@@ -1,3 +1,4 @@
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { unsecureAndOpenDoor, closeAndSecureDoor } from '../actions';
 import StateChangeButton from '../components/stateChangeButton.jsx';
@@ -9,17 +10,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  let actionToDispatch = unsecureAndOpenDoor;
-  if (ownProps.door === 'Closed') {
-    actionToDispatch = unsecureAndOpenDoor;
-  } else if (ownProps.door === 'Open') {
-    actionToDispatch = closeAndSecureDoor;
-  }
+const mapDispatchToProps = (dispatch) => {
   return {
-    onStateButtonClick: () => {
-      dispatch(actionToDispatch());
-    },
+    unsecureAndOpenDoor: bindActionCreators(unsecureAndOpenDoor, dispatch),
+    closeAndSecureDoor: bindActionCreators(closeAndSecureDoor, dispatch),
   };
 };
 

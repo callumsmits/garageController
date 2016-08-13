@@ -10,26 +10,44 @@ Chai.use(sinonChai);
 
 describe('<StateChangeButton />', function () {
   it('should render itself and sub-components', function () {
-    // const spy = sinon.spy();
+    const unsecureAndOpenDoor = new sinon.spy();
+    const closeAndSecureDoor = new sinon.spy();
     const props = {
       doorState: 'CLOSED',
       secureState: 'SECURE',
-      onStateButtonClick: new sinon.spy(),
+      unsecureAndOpenDoor,
+      closeAndSecureDoor,
     };
     const wrapper = shallow(<StateChangeButton {...props} />);
     expect(wrapper.find('button')).to.have.length(1);
     expect(wrapper.find('button').text()).to.equal('Open door');
   });
 
-  it('throws onStateButtonClick when clicked', function () {
-    const onStateButtonClick = new sinon.spy();
+  it('throws unsecureAndOpenDoor when clicked in closed doorState', function () {
+    const unsecureAndOpenDoor = new sinon.spy();
+    const closeAndSecureDoor = new sinon.spy();
     const props = {
       doorState: 'CLOSED',
       secureState: 'SECURE',
-      onStateButtonClick,
+      unsecureAndOpenDoor,
+      closeAndSecureDoor,
     };
     const wrapper = shallow(<StateChangeButton {...props} />);
     wrapper.find('button').simulate('click');
-    expect(onStateButtonClick.calledOnce).to.be.true;
+    expect(unsecureAndOpenDoor.calledOnce).to.be.true;
+  });
+
+  it('throws closeAndSecureDoor when clicked in open doorState', function () {
+    const unsecureAndOpenDoor = new sinon.spy();
+    const closeAndSecureDoor = new sinon.spy();
+    const props = {
+      doorState: 'OPEN',
+      secureState: 'SECURE',
+      unsecureAndOpenDoor,
+      closeAndSecureDoor,
+    };
+    const wrapper = shallow(<StateChangeButton {...props} />);
+    wrapper.find('button').simulate('click');
+    expect(closeAndSecureDoor.calledOnce).to.be.true;
   });
 });
