@@ -26,6 +26,9 @@ export const turnOffRequestComplete = createAction(actionTypes.TURN_OFF_REQUEST_
 
 export const turnOnTimeout = createAction(actionTypes.TURN_ON_TIMEOUT);
 
+export const distanceRequest = createAction(actionTypes.DISTANCE_REQUEST);
+
+export const distanceRequestComplete = createAction(actionTypes.DISTANCE_REQUEST_COMPLETE);
 
 function delay(ms) {
   return new Promise(function (resolve) {
@@ -137,3 +140,29 @@ export function closeAndSecureDoor() {
       return {};
     });
 }
+
+export function getDistance() {
+  return (dispatch) => {
+    dispatch(distanceRequest());
+
+    return fetch(`${constants.garageDeviceAddress}${constants.garageDistanceURL}`)
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(distanceRequestComplete());
+      return json;
+    })
+    .catch(() => dispatch(distanceRequestComplete()))
+    .then((json) => dispatch(measuredDistance(json.distance)));
+  };
+}
+
+export function startMonitoringDistance(iterations) {
+  return (dispatch) => {
+    if (iterations !== 0) {
+      setTimeout(() => dispatch(startMonitoringDistance(iterations - 1)),
+        constants.garageInterDistanceMeasurementDelay);
+    }
+    return dispatch(getDistance());
+  };
+}
+

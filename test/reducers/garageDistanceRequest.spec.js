@@ -8,38 +8,43 @@ const error = new TypeError('not a number');
 const reducerTestBaseConfig = { door: { position: 'CLOSED' }, secure: 'OFF' };
 const reducerTestDoorConfig = [
   {
-    action: { type: 'DOOR_RELAY_REQUEST' },
+    action: { type: 'DISTANCE_REQUEST' },
     stateReductions: [
       {
         start: {
-          door: { position: 'CLOSED' },
+          distanceRequest: 'NONE',
         },
         end: {
-          door: { position: 'CLOSED', request: 'RELAY_REQUEST' },
+          distanceRequest: 'DISTANCE_REQUEST',
         },
       },
       {
         start: {
-          door: { position: 'OPEN' },
+          distanceRequest: 'DISTANCE_REQUEST_COMPLETE',
         },
         end: {
-          door: { position: 'OPEN', request: 'RELAY_REQUEST' },
+          distanceRequest: 'DISTANCE_REQUEST_COMPLETE',
+        },
+      },
+    ],
+  },
+  {
+    action: { type: 'DISTANCE_REQUEST_COMPLETE' },
+    stateReductions: [
+      {
+        start: {
+          distanceRequest: 'DISTANCE_REQUEST',
+        },
+        end: {
+          distanceRequest: 'NONE',
         },
       },
       {
         start: {
-          door: { position: 'UNKNOWN' },
+          distanceRequest: 'NONE',
         },
         end: {
-          door: { position: 'UNKNOWN', request: 'RELAY_REQUEST' },
-        },
-      },
-      {
-        start: {
-          door: { position: 'OPENING' },
-        },
-        end: {
-          door: { position: 'OPENING' },
+          distanceRequest: 'NONE',
         },
       },
     ],
@@ -66,4 +71,8 @@ describe('garage distance reducers', function () {
       distanceRequest: 'NONE',
     }));
   });
+
+  reducerTestDoorConfig.forEach((test) => {
+    runSingleTest(test);
+  }, this);
 });

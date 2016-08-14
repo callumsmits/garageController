@@ -259,4 +259,60 @@ describe('garage async actions', function () {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
   });
+
+  it('sends correct actions during getDistance action', function () {
+    nock(constants.garageDeviceAddress)
+      .get(constants.garageDistanceURL)
+      .reply(200, {
+        distance: 30,
+      });
+
+    const expectedActions = [
+      { type: types.DISTANCE_REQUEST },
+      { type: types.DISTANCE_REQUEST_COMPLETE },
+      { type: types.MEASURED_DISTANCE, payload: 30 },
+    ];
+
+    const store = mockStore({ secure: 'ON', door: { position: 'OPEN' }, distanceRequest: 'NONE' });
+    return store.dispatch(actions.getDistance())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  function delay(ms) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  it('sends correct actions during startMonitoringDistance action', function () {
+    nock(constants.garageDeviceAddress)
+      .get(constants.garageDistanceURL)
+      .reply(200, {
+        distance: 30,
+      })
+      .get(constants.garageDistanceURL)
+      .reply(200, {
+        distance: 30,
+      });
+
+    const expectedActions = [
+      { type: types.DISTANCE_REQUEST },
+      { type: types.DISTANCE_REQUEST_COMPLETE },
+      { type: types.MEASURED_DISTANCE, payload: 30 },
+      { type: types.DISTANCE_REQUEST },
+      { type: types.DISTANCE_REQUEST_COMPLETE },
+      { type: types.MEASURED_DISTANCE, payload: 30 },
+    ];
+
+    const store = mockStore({ secure: 'ON', door: { position: 'OPEN' }, distanceRequest: 'NONE' });
+    return store.dispatch(actions.startMonitoringDistance(1))
+      // Delay here because startMonitoringDistance uses a timeout rather than promise
+      // to avoid using promises in infinite loop
+      .then(() => delay(20))
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
 });

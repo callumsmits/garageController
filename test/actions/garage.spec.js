@@ -73,4 +73,14 @@ describe('garage actions', function () {
       type: 'TURN_OFF_REQUEST_COMPLETE',
     });
   });
+  it('distanceRequest should create DISTANCE_REQUEST action', function () {
+    expect(actions.distanceRequest()).to.deep.equal({
+      type: 'DISTANCE_REQUEST',
+    });
+  });
+  it('distanceRequestComplete should crete DISTANCE_REQUEST_COMPLETE action', function () {
+    expect(actions.distanceRequestComplete()).to.deep.equal({
+      type: 'DISTANCE_REQUEST_COMPLETE',
+    });
+  });
 });
