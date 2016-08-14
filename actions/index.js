@@ -156,7 +156,7 @@ export function getDistance() {
   };
 }
 
-export function startMonitoringDistance(iterations) {
+export function startMonitoringDistance(iterations = -1) {
   return (dispatch) => {
     if (iterations !== 0) {
       setTimeout(() => dispatch(startMonitoringDistance(iterations - 1)),
