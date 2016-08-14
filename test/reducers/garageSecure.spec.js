@@ -3,229 +3,200 @@ import garageReducer from '../../reducers';
 
 const expect = chai.expect;
 
+const reducerTestBaseConfig = { door: { position: 'CLOSED' }, distanceRequest: 'NONE' };
+
+function generateTestState(secure) {
+  return Object.assign({}, reducerTestBaseConfig, secure);
+}
+
 const error = new TypeError('not a number');
 describe('garage secure reducers', function () {
   it('should handle initial state', function () {
-    expect(garageReducer(undefined, {})).to.deep.equal({
+    expect(garageReducer(undefined, {})).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should respond to TURN_ON_REQUEST action in OFF state', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'TURN_ON_REQUEST',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should not respond to TURN_ON_REQUEST action in other states', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    });
-    expect(garageReducer({
+    }));
+    expect(garageReducer(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should respond to TURN_ON_REQUEST_COMPLETE action in TURN_ON_REQUEST state', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURN_ON_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 0,
         id: 143,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: {
         state: 'TURNING_ON',
         id: 143,
       },
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should check payload of TURN_ON_REQUEST_COMPLETE action', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURN_ON_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 1,
         id: 143,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
-    expect(garageReducer({
+    }));
+    expect(garageReducer(generateTestState({
       secure: 'TURN_ON_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: error,
       error: true,
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should not respond to TURN_ON_REQUEST_COMPLETE in other states', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_REQUEST_COMPLETE',
       payload: {
         secure: 0,
         id: 143,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should respond to TURN_ON_TIMEOUT action in TURNING_ON state', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: {
         state: 'TURNING_ON',
         id: 143,
       },
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_TIMEOUT',
       payload: 143,
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should check that state id matches id in TURN_ON_TIMEOUT action', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: {
         state: 'TURNING_ON',
         id: 143,
       },
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_TIMEOUT',
       payload: 145,
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: {
         state: 'TURNING_ON',
         id: 143,
       },
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should not respond to TURN_ON_TIMEOUT action in other states', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_TIMEOUT',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
-    expect(garageReducer({
+    }));
+    expect(garageReducer(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_ON_TIMEOUT',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should respond to TURN_OFF_REQUEST action in ON state', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'TURN_OFF_REQUEST',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should not respond to TURN_OFF_REQUEST action in other states', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST',
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should respond to TURN_OFF_REQUEST_COMPLETE action in TURN_OFF_REQUEST state', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURN_OFF_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST_COMPLETE',
       payload: {
         secure: 1,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'OFF',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should check TURN_OFF_REQUEST_COMPLETE payload and handle error', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURN_OFF_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST_COMPLETE',
       payload: {
         secure: 0,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    });
-    expect(garageReducer({
+    }));
+    expect(garageReducer(generateTestState({
       secure: 'TURN_OFF_REQUEST',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST_COMPLETE',
       payload: error,
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should not respond to TURN_OFF_REQUEST_COMPLETE action in other states', function () {
-    expect(garageReducer({
+    expect(garageReducer(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'TURN_OFF_REQUEST_COMPLETE',
       payload: {
         secure: 0,
       },
-    })).to.deep.equal({
+    })).to.deep.equal(generateTestState({
       secure: 'TURNING_ON',
-      door: { position: 'CLOSED' },
-    });
+    }));
   });
 });

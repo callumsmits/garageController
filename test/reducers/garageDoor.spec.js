@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const error = new TypeError('not a number');
 
-const reducerTestSecureConfig = { secure: 'OFF' };
+const reducerTestBaseConfig = { secure: 'OFF', distanceRequest: 'NONE' };
 const reducerTestDoorConfig = [
   {
     action: { type: 'DOOR_RELAY_REQUEST' },
@@ -150,11 +150,15 @@ const reducerTestDoorConfig = [
   },
 ];
 
+function generateTestState(door) {
+  return Object.assign({}, reducerTestBaseConfig, door);
+}
+
 function runSingleTest(test) {
   it(`should handle ${test.action.type} action ${test.extraTitleText}`, function () {
     test.stateReductions.forEach((e) => {
-      const startState = Object.assign({}, e.start, reducerTestSecureConfig);
-      const expectedEndState = Object.assign({}, e.end, reducerTestSecureConfig);
+      const startState = generateTestState(e.start);
+      const expectedEndState = generateTestState(e.end);
       expect(garageReducer(startState, test.action)).to.deep.equal(expectedEndState);
     });
   });
@@ -162,12 +166,11 @@ function runSingleTest(test) {
 
 describe('garage door reducers', function () {
   it('should handle initial state', function () {
-    expect(garageReducer(undefined, {})).to.deep.equal({
-      secure: 'OFF',
+    expect(garageReducer(undefined, {})).to.deep.equal(generateTestState({
       door: {
         position: 'CLOSED',
       },
-    });
+    }));
   });
 
   reducerTestDoorConfig.forEach((test) => {
@@ -175,38 +178,32 @@ describe('garage door reducers', function () {
   }, this);
 
   it('should convert state to CLOSED with DISTANCE action below threshold', function () {
-    expect(garageReducer({
-      secure: 'OFF',
+    expect(garageReducer(generateTestState({
       door: { position: 'UNKNOWN' },
-    }, {
+    }), {
       type: 'DISTANCE',
       payload: 10,
-    })).to.deep.equal({
-      secure: 'OFF',
+    })).to.deep.equal(generateTestState({
       door: { position: 'CLOSED' },
-    });
+    }));
   });
   it('should convert state to UNKNOWN with DISTANCE action' +
     ' above threshold only if in closed state', function () {
-    expect(garageReducer({
-      secure: 'OFF',
+    expect(garageReducer(generateTestState({
       door: { position: 'CLOSED' },
-    }, {
+    }), {
       type: 'DISTANCE',
       payload: 100,
-    })).to.deep.equal({
-      secure: 'OFF',
+    })).to.deep.equal(generateTestState({
       door: { position: 'UNKNOWN' },
-    });
-    expect(garageReducer({
-      secure: 'OFF',
+    }));
+    expect(garageReducer(generateTestState({
       door: { position: 'OPEN' },
-    }, {
+    }), {
       type: 'DISTANCE',
       payload: 100,
-    })).to.deep.equal({
-      secure: 'OFF',
+    })).to.deep.equal(generateTestState({
       door: { position: 'OPEN' },
-    });
+    }));
   });
 });
