@@ -6,6 +6,8 @@ export const garageDoorStateURL = '/doorState';
 
 export const garageSecureStateURL = '/secureState';
 
+export const garageDistanceURL = '/distance';
+
 let turnOnDelay = 3000;
 if (process.env.NODE_ENV === 'test') {
   turnOnDelay = 10;
@@ -26,3 +28,10 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export const garageSecureToMoveDelay = secureToMoveDelay;
+
+let interDistanceMeasurementDelay = 5000;
+if (process.env.NODE_ENV === 'test') {
+  interDistanceMeasurementDelay = 10;
+}
+
+export const garageInterDistanceMeasurementDelay = interDistanceMeasurementDelay;
