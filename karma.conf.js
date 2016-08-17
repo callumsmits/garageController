@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const values = require('postcss-modules-values');
 
 let browsers = ['Firefox', 'Chrome'];
 
@@ -36,12 +37,23 @@ module.exports = function (config) {
             test: /\.json$/,
             loader: 'json',
           },
+          {
+            test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
+            loader: 'url',
+          },
+          {
+            test: /\.css$/,
+            loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
+          },
         ],
         resolve: {
           alias: {
             sinon: 'sinon/pkg/sinon',
           },
         },
+        postcss: [
+          values,
+        ],
         externals: {
           cheerio: 'window',
           'react/addons': true,

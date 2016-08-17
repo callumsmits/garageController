@@ -181,7 +181,7 @@ describe('garage door reducers', function () {
     expect(garageReducer(generateTestState({
       door: { position: 'UNKNOWN' },
     }), {
-      type: 'DISTANCE',
+      type: 'MEASURED_DISTANCE',
       payload: 100,
     })).to.deep.equal(generateTestState({
       door: { position: 'CLOSED' },
@@ -192,7 +192,7 @@ describe('garage door reducers', function () {
     expect(garageReducer(generateTestState({
       door: { position: 'CLOSED' },
     }), {
-      type: 'DISTANCE',
+      type: 'MEASURED_DISTANCE',
       payload: 10,
     })).to.deep.equal(generateTestState({
       door: { position: 'UNKNOWN' },
@@ -200,7 +200,7 @@ describe('garage door reducers', function () {
     expect(garageReducer(generateTestState({
       door: { position: 'OPEN' },
     }), {
-      type: 'DISTANCE',
+      type: 'MEASURED_DISTANCE',
       payload: 10,
     })).to.deep.equal(generateTestState({
       door: { position: 'OPEN' },

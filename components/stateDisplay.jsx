@@ -1,4 +1,7 @@
 import React, { PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
+import styles from 'font-awesome/css/font-awesome.css';
+
 
 const StateDisplay = ({ doorState, secureState }) => {
   let stateText = '';
@@ -39,6 +42,8 @@ const StateDisplay = ({ doorState, secureState }) => {
       default:
     }
   }
+
+      // <FontAwesome name="lock" size="5x" cssModule={styles} />
 
   return (
     <div>

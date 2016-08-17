@@ -36,7 +36,7 @@ const door = (state = { position: 'CLOSED' }, action) => {
         default:
           return state;
       }
-    case 'DISTANCE':
+    case 'MEASURED_DISTANCE':
       if (action.payload > constants.closedDistanceThreshold) {
         return { position: 'CLOSED' };
       }
