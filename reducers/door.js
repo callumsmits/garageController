@@ -1,8 +1,9 @@
 import * as constants from '../constants';
+import * as actionTypes from '../actions/actionTypes.js';
 
 const door = (state = { position: 'CLOSED' }, action) => {
   switch (action.type) {
-    case 'DOOR_RELAY_REQUEST':
+    case actionTypes.DOOR_RELAY_REQUEST:
       switch (state.position) {
         case 'OPEN':
         case 'CLOSED':
@@ -11,7 +12,7 @@ const door = (state = { position: 'CLOSED' }, action) => {
         default:
           return state;
       }
-    case 'DOOR_RELAY_REQUEST_COMPLETE':
+    case actionTypes.DOOR_RELAY_REQUEST_COMPLETE:
       if (action.error) {
         return { position: state.position };
       }
@@ -25,7 +26,7 @@ const door = (state = { position: 'CLOSED' }, action) => {
         default:
           return state;
       }
-    case 'MOVEMENT_TIMEOUT':
+    case actionTypes.MOVEMENT_TIMEOUT:
       switch (state.position) {
         case 'OPENING':
           return { position: 'OPEN' };
@@ -36,7 +37,7 @@ const door = (state = { position: 'CLOSED' }, action) => {
         default:
           return state;
       }
-    case 'MEASURED_DISTANCE':
+    case actionTypes.MEASURED_DISTANCE:
       if (action.payload > constants.closedDistanceThreshold) {
         return { position: 'CLOSED' };
       }
