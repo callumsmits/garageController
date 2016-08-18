@@ -22,32 +22,35 @@ const StateDisplay = ({ doorState, secureState }) => {
       stateText = 'Unknown';
   }
 
-  let secureText = '';
+  const secureProps = {
+    name: 'question',
+  };
   if (secureState.state) {
-    secureText = 'Unlocking';
+    secureProps.name = 'circle-o-notch';
+    secureProps.spin = true;
   } else {
     switch (secureState) {
       case 'ON':
-        secureText = 'Unlocked';
+        secureProps.name = 'unlock';
         break;
       case 'OFF':
-        secureText = 'Secure';
+        secureProps.name = 'lock';
         break;
       case 'TURN_ON_REQUEST':
-        secureText = 'Unlocking';
+        secureProps.name = 'circle-o-notch';
+        secureProps.spin = true;
         break;
       case 'TURN_OFF_REQUEST':
-        secureText = 'Locking';
+        secureProps.name = 'circle-o-notch';
+        secureProps.spin = true;
         break;
       default:
     }
   }
 
-      // <FontAwesome name="lock" size="5x" cssModule={styles} />
-
   return (
     <div>
-      <h3>{secureText}</h3>
+      <FontAwesome {...secureProps} size="3x" fixedWidth cssModule={styles} />
       <h2>{stateText}</h2>
     </div>
   );
