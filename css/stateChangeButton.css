@@ -1,0 +1,36 @@
+@value display: './stateDisplay.css';
+@value width from display;
+
+.btn {
+  -webkit-border-radius: 11;
+  -moz-border-radius: 11;
+  border-radius: 11px;
+  font-family: Arial;
+  color: #616161;
+  font-size: 20px;
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #3a97d1 2px;
+  text-decoration: none;
+  user-select: none;
+  outline: 0;
+}
+
+.btn:hover {
+  background: #fafafa;
+  background-image: -webkit-linear-gradient(top, #fafafa, #f7f7f7);
+  background-image: -moz-linear-gradient(top, #fafafa, #f7f7f7);
+  background-image: -ms-linear-gradient(top, #fafafa, #f7f7f7);
+  background-image: -o-linear-gradient(top, #fafafa, #f7f7f7);
+  background-image: linear-gradient(to bottom, #fafafa, #f7f7f7);
+  text-decoration: none;
+}
+
+.box {
+  padding: 20px 0 0 0;
+  max-width: width;
+  margin: 0 auto;
+  text-decoration: none;  
+  overflow: auto;
+  text-align: center;
+}
