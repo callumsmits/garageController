@@ -1,7 +1,8 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
 @value radius: 10px;
 @value text-color: #ffffff;
-@value width: 300px;
-@value size: 40px;
+@value width: 50%;
+@value size: 60px;  
 
 .box {
   -webkit-border-radius: radius;
@@ -53,7 +54,9 @@
 }
 
 .icon {
-  // padding-top: 10px;
   vertical-align: middle;
-  // float: left;
+}
+
+.text {
+  font-family: 'Montserrat', sans-serif;
 }

@@ -65,7 +65,7 @@ const StateDisplay = ({ doorState, secureState }) => {
           className={componentStyles.icon}
           cssModule={faStyles}
         />
-        <span>{stateText}</span>
+        <span className={componentStyles.text}>{stateText}</span>
       </div>
     </div>
   );

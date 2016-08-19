@@ -61,6 +61,7 @@ describe('<StateDisplay />', function () {
     expect(wrapper.hasClass(componentStyles.box)).to.equal(true);
     expect(wrapper.find('div').at(1).hasClass(componentStyles.innerbox)).to.equal(true);
     expect(wrapper.find('FontAwesome').prop('className')).to.equal(componentStyles.icon);
+    expect(wrapper.find('span').hasClass(componentStyles.text)).to.equal(true);
 
     const wrapperOn = shallow(<StateDisplay doorState="OPEN" secureState="ON" />);
     expect(wrapperOn.hasClass(componentStyles.unsecure)).to.equal(true);
