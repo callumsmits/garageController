@@ -182,7 +182,7 @@ describe('garage door reducers', function () {
       door: { position: 'UNKNOWN' },
     }), {
       type: 'MEASURED_DISTANCE',
-      payload: 100,
+      payload: 150,
     })).to.deep.equal(generateTestState({
       door: { position: 'CLOSED' },
     }));
