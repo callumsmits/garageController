@@ -1,4 +1,4 @@
-export const closedDistanceThreshold = 20; // cm
+export const closedDistanceThreshold = 30; // cm
 
 export const garageDeviceAddress = 'http://garage.local';
 
@@ -8,14 +8,14 @@ export const garageSecureStateURL = '/secureState';
 
 export const garageDistanceURL = '/distance';
 
-let turnOnDelay = 3000;
+let turnOnDelay = 4000;
 if (process.env.NODE_ENV === 'test') {
   turnOnDelay = 10;
 }
 
 export const garageSecureTurnOnDelay = turnOnDelay;
 
-let doorMovementDelay = 5000;
+let doorMovementDelay = 17000;
 if (process.env.NODE_ENV === 'test') {
   doorMovementDelay = 30;
 }
