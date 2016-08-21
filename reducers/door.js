@@ -38,11 +38,11 @@ const door = (state = { position: 'CLOSED' }, action) => {
           return state;
       }
     case actionTypes.MEASURED_DISTANCE:
-      if (action.payload < constants.closedDistanceThreshold) {
+      if (action.payload > constants.closedDistanceThreshold) {
         return { position: 'CLOSED' };
       }
       if (((state.position === 'CLOSED') || (state.position === 'UNKNOWN'))
-       && (action.payload > constants.closedDistanceThreshold)) {
+       && (action.payload < constants.closedDistanceThreshold)) {
         return { position: 'OPEN' };
       }
       return state;
