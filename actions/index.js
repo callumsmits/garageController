@@ -46,7 +46,17 @@ export function startTurnOnTimer(id) {
 }
 
 export function unsecureDoor() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      dispatch(turnOnRequest());
+
+      const timeId = Date.now();
+      dispatch(turnOnRequestComplete({
+        secure: 0,
+        id: timeId,
+      }));
+      return dispatch(startTurnOnTimer(timeId));
+    }
     dispatch(turnOnRequest());
 
     const timeId = Date.now();
@@ -68,7 +78,12 @@ export function unsecureDoor() {
 }
 
 export function secureDoor() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      dispatch(turnOffRequest());
+      dispatch(turnOffRequestComplete({ secure: 1 }));
+      return 0;
+    }
     dispatch(turnOffRequest());
 
     return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
@@ -86,7 +101,12 @@ export function secureDoor() {
 }
 
 export function triggerDoorRelay() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      dispatch(doorRelayRequest());
+      dispatch(doorRelayRequestComplete({ door: 1 }));
+      return 0;
+    }
     dispatch(doorRelayRequest());
 
     return fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
@@ -104,17 +124,29 @@ export function triggerDoorRelay() {
 }
 
 export function openDoor() {
-  return (dispatch) =>
-    dispatch(triggerDoorRelay())
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      dispatch(triggerDoorRelay());
+      return delay(constants.garageDoorMovementDelay)
+      .then(() => dispatch(movementTimeout()));
+    }
+    return dispatch(triggerDoorRelay())
     .then(() => delay(constants.garageDoorMovementDelay))
     .then(() => dispatch(movementTimeout()));
+  };
 }
 
 export function closeDoor() {
-  return (dispatch) =>
-    dispatch(triggerDoorRelay())
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      dispatch(triggerDoorRelay());
+      return delay(constants.garageDoorMovementDelay)
+    .then(() => dispatch(movementTimeout()));
+    }
+    return dispatch(triggerDoorRelay())
     .then(() => delay(constants.garageDoorMovementDelay))
     .then(() => dispatch(movementTimeout()));
+  };
 }
 
 export function unsecureAndOpenDoor() {
@@ -159,7 +191,10 @@ export function closeAndSecureDoor() {
 }
 
 export function getDistance() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      return 0;
+    }
     dispatch(distanceRequest());
 
     return fetch(`${constants.garageDeviceAddress}${constants.garageDistanceURL}`)
@@ -174,7 +209,10 @@ export function getDistance() {
 }
 
 export function startMonitoringDistance(iterations = -1) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().demo) {
+      return 0;
+    }
     if (iterations !== 0) {
       setTimeout(() => dispatch(startMonitoringDistance(iterations - 1)),
         constants.garageInterDistanceMeasurementDelay);
