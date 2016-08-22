@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import garageReducer from '../reducers/index.js';
 import App from '../components/app.jsx';
-import { startMonitoringDistance } from '../actions';
+import { startMonitoringDistance, getInitialSecureState } from '../actions';
 
 let store = createStore(garageReducer, undefined, compose(
   applyMiddleware(thunk),
@@ -14,6 +14,7 @@ let store = createStore(garageReducer, undefined, compose(
 );
 
 // store.dispatch(startMonitoringDistance());
+store.dispatch(getInitialSecureState());
 
 const root = document.createElement('div');
 document.body.appendChild(root);

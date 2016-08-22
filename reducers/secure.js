@@ -36,6 +36,11 @@ const secure = (state = 'OFF', action) => {
         return 'OFF';
       }
       return state;
+    case actionTypes.INITIAL_SET_SECURE_STATE:
+      if (!action.error) {
+        return action.payload;
+      }
+      return state;
     default:
       return state;
   }
