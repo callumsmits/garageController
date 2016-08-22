@@ -1,0 +1,26 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+
+.base {
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 30px;
+	position: absolute;
+	right: 10px;
+}
+
+.fade {
+	-webkit-opacity: 0;
+	-mos-opacity: 0;
+	opacity: 0;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+.fadein {
+	-webkit-opacity: 1;
+	-mos-opacity: 1;
+	opacity: 1;
+}
