@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
+import faStyles from 'font-awesome/css/font-awesome.css';
+import FontAwesome from './reactFontAwesome.jsx';
+import componentStyles from '../css/stateDisplay.css';
 
 const StateDisplay = ({ doorState, secureState }) => {
+
   let stateText = '';
   switch (doorState) {
     case 'CLOSED':
@@ -19,31 +23,50 @@ const StateDisplay = ({ doorState, secureState }) => {
       stateText = 'Unknown';
   }
 
-  let secureText = '';
+  let divClass = componentStyles.intermediate;
+  const secureProps = {
+    name: 'question',
+  };
   if (secureState.state) {
-    secureText = 'Unlocking';
+    secureProps.name = 'circle-o-notch';
+    secureProps.spin = true;
+    divClass = componentStyles.intermediate;
   } else {
     switch (secureState) {
       case 'ON':
-        secureText = 'Unlocked';
+        secureProps.name = 'unlock';
+        divClass = componentStyles.unsecure;
         break;
       case 'OFF':
-        secureText = 'Secure';
+        secureProps.name = 'lock';
+        divClass = componentStyles.secure;
         break;
       case 'TURN_ON_REQUEST':
-        secureText = 'Unlocking';
+        secureProps.name = 'circle-o-notch';
+        secureProps.spin = true;
+        divClass = componentStyles.intermediate;
         break;
       case 'TURN_OFF_REQUEST':
-        secureText = 'Locking';
+        secureProps.name = 'circle-o-notch';
+        secureProps.spin = true;
+        divClass = componentStyles.intermediate;
         break;
       default:
     }
   }
-
+  divClass += ` ${componentStyles.box}`;
   return (
-    <div>
-      <h3>{secureText}</h3>
-      <h2>{stateText}</h2>
+    <div className={divClass}>
+      <div className={componentStyles.innerbox}>
+        <FontAwesome
+          {...secureProps}
+          size="2x"
+          fixedWidth
+          className={componentStyles.icon}
+          cssModule={faStyles}
+        />
+        <span className={componentStyles.text}>{stateText}</span>
+      </div>
     </div>
   );
 };

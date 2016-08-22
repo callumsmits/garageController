@@ -129,8 +129,20 @@ export function unsecureAndOpenDoor() {
 }
 
 export function closeAndSecureDoor() {
-  return (dispatch, getState) =>
-    dispatch(closeDoor())
+  return (dispatch, getState) => {
+    if (getState().secure !== 'ON') {
+      return dispatch(unsecureDoor())
+      .then(() => dispatch(closeDoor()))
+      .then(() => delay(constants.garageSecureToMoveDelay))
+      .then(() => {
+        const { door } = getState();
+        if (door.position === 'CLOSED') {
+          return dispatch(secureDoor());
+        }
+        return {};
+      });
+    }
+    return dispatch(closeDoor())
     .then(() => delay(constants.garageSecureToMoveDelay))
     .then(() => {
       const { door } = getState();
@@ -139,6 +151,7 @@ export function closeAndSecureDoor() {
       }
       return {};
     });
+  };
 }
 
 export function getDistance() {

@@ -1,5 +1,5 @@
 const path = require('path');
-
+const values = require('postcss-modules-values');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -14,6 +14,14 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
+      {
+        test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
+        loader: 'url',
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
+      },
     ],
   },
   entry: {
@@ -24,5 +32,9 @@ module.exports = {
     filename: 'bundle.js',
   },
   plugins: [
-    new HtmlWebpackPlugin({ title: 'garageController' })],
+    new HtmlWebpackPlugin({ title: 'garageController' }),
+  ],
+  postcss: [
+    values,
+  ],
 };

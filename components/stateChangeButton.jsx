@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import style from '../css/stateChangeButton.css';
+
 const StateChangeButton = ({ doorState, secureState, unsecureAndOpenDoor, closeAndSecureDoor }) => {
   let buttonText = '';
   let clickFunction = unsecureAndOpenDoor;
@@ -11,10 +13,21 @@ const StateChangeButton = ({ doorState, secureState, unsecureAndOpenDoor, closeA
     clickFunction = closeAndSecureDoor;
   }
 
+  let disabled = false;
+  if (!((doorState === 'OPEN') || (doorState === 'CLOSED'))) {
+    disabled = true;
+  }
 
   return (
-    <div>
-      <button type="button" onClick={clickFunction}>{buttonText}</button>
+    <div className={style.box}>
+      <button
+        type="button"
+        className={style.btn}
+        onClick={clickFunction}
+        disabled={disabled}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 };

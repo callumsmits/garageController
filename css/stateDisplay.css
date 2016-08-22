@@ -1,0 +1,62 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+@value radius: 10px;
+@value text-color: #ffffff;
+@value width: 50%;
+@value size: 60px;  
+
+.box {
+  -webkit-border-radius: radius;
+  -moz-border-radius: radius;
+  border-radius: radius;
+  font-family: Arial;
+  color: text-color;
+  font-size: size;
+  padding: 30px 20px 30px 20px;
+  max-width: width;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;  
+}
+
+.innerbox {
+  display: block;
+  overflow: auto;
+  margin: 0 auto;
+  vertical-align: center;
+  overflow: auto;
+}
+
+.unsecure {
+  background: #d93434;
+  background-image: -webkit-linear-gradient(top, #d93434, #b82b2b);
+  background-image: -moz-linear-gradient(top, #d93434, #b82b2b);
+  background-image: -ms-linear-gradient(top, #d93434, #b82b2b);
+  background-image: -o-linear-gradient(top, #d93434, #b82b2b);
+  background-image: linear-gradient(to bottom, #d93434, #b82b2b);
+}
+
+.secure {
+  background: #4ad934;
+  background-image: -webkit-linear-gradient(top, #4ad934, #2cb848);
+  background-image: -moz-linear-gradient(top, #4ad934, #2cb848);
+  background-image: -ms-linear-gradient(top, #4ad934, #2cb848);
+  background-image: -o-linear-gradient(top, #4ad934, #2cb848);
+  background-image: linear-gradient(to bottom, #4ad934, #2cb848);
+}
+
+.intermediate {
+  background: #ced934;
+  background-image: -webkit-linear-gradient(top, #ced934, #afb82c);
+  background-image: -moz-linear-gradient(top, #ced934, #afb82c);
+  background-image: -ms-linear-gradient(top, #ced934, #afb82c);
+  background-image: -o-linear-gradient(top, #ced934, #afb82c);
+  background-image: linear-gradient(to bottom, #ced934, #afb82c);
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.text {
+  font-family: 'Montserrat', sans-serif;
+}
