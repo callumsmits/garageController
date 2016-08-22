@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import FontAwesome from 'react-fontawesome';
 import faStyles from 'font-awesome/css/font-awesome.css';
+import FontAwesome from './reactFontAwesome.jsx';
 import componentStyles from '../css/stateDisplay.css';
 
 const StateDisplay = ({ doorState, secureState }) => {
