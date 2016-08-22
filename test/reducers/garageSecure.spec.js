@@ -3,7 +3,7 @@ import garageReducer from '../../reducers';
 
 const expect = chai.expect;
 
-const reducerTestBaseConfig = { door: { position: 'CLOSED' }, distanceRequest: 'NONE' };
+const reducerTestBaseConfig = { door: { position: 'CLOSED' }, distanceRequest: 'NONE', demo: false };
 
 function generateTestState(secure) {
   return Object.assign({}, reducerTestBaseConfig, secure);
@@ -197,6 +197,27 @@ describe('garage secure reducers', function () {
       },
     })).to.deep.equal(generateTestState({
       secure: 'TURNING_ON',
+    }));
+  });
+  it('should set state after INITIAL_SET_SECURE_STATE appropriately', function () {
+    expect(garageReducer(generateTestState({
+      secure: 'OFF',
+    }), {
+      type: 'INITIAL_SET_SECURE_STATE',
+      payload: 'ON',
+    })).to.deep.equal(generateTestState({
+      secure: 'ON',
+    }));
+  });
+  it('should should ignore an error passed as INITIAL_SET_SECURE_STATE', function () {
+    expect(garageReducer(generateTestState({
+      secure: 'OFF',
+    }), {
+      type: 'INITIAL_SET_SECURE_STATE',
+      payload: error,
+      error: true,
+    })).to.deep.equal(generateTestState({
+      secure: 'OFF',
     }));
   });
 });

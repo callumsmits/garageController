@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const error = new TypeError('not a number');
 
-const reducerTestBaseConfig = { door: { position: 'CLOSED' }, secure: 'OFF' };
+const reducerTestBaseConfig = { door: { position: 'CLOSED' }, secure: 'OFF', demo: false };
 const reducerTestDoorConfig = [
   {
     action: { type: 'DISTANCE_REQUEST' },

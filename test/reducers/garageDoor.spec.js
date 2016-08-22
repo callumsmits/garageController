@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const error = new TypeError('not a number');
 
-const reducerTestBaseConfig = { secure: 'OFF', distanceRequest: 'NONE' };
+const reducerTestBaseConfig = { secure: 'OFF', distanceRequest: 'NONE', demo: false };
 const reducerTestDoorConfig = [
   {
     action: { type: 'DOOR_RELAY_REQUEST' },

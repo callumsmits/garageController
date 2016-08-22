@@ -78,9 +78,20 @@ describe('garage actions', function () {
       type: 'DISTANCE_REQUEST',
     });
   });
-  it('distanceRequestComplete should crete DISTANCE_REQUEST_COMPLETE action', function () {
+  it('distanceRequestComplete should create DISTANCE_REQUEST_COMPLETE action', function () {
     expect(actions.distanceRequestComplete()).to.deep.equal({
       type: 'DISTANCE_REQUEST_COMPLETE',
+    });
+  });
+  it('initialSetSecureState should create INITIAL_SET_SECURE_STATE action', function () {
+    expect(actions.initialSetSecureState('ON')).to.deep.equal({
+      type: 'INITIAL_SET_SECURE_STATE',
+      payload: 'ON',
+    });
+  });
+  it('enableDemoMode should create ENABLE_DEMO_MODE action', function () {
+    expect(actions.enableDemoMode()).to.deep.equal({
+      type: 'ENABLE_DEMO_MODE',
     });
   });
 });

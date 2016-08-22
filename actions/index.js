@@ -30,6 +30,10 @@ export const distanceRequest = createAction(actionTypes.DISTANCE_REQUEST);
 
 export const distanceRequestComplete = createAction(actionTypes.DISTANCE_REQUEST_COMPLETE);
 
+export const initialSetSecureState = createAction(actionTypes.INITIAL_SET_SECURE_STATE);
+
+export const enableDemoMode = createAction(actionTypes.ENABLE_DEMO_MODE);
+
 function delay(ms) {
   return new Promise(function (resolve) {
     setTimeout(resolve, ms);
@@ -179,3 +183,16 @@ export function startMonitoringDistance(iterations = -1) {
   };
 }
 
+export function getInitialSecureState() {
+  return (dispatch) => fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`)
+    .then((res) => res.json())
+    .then((json) => {
+      if (json.secure === 0) {
+        dispatch(initialSetSecureState('ON'));
+      } else if (json.secure === 1) {
+        dispatch(initialSetSecureState('OFF'));
+      }
+      return json;
+    })
+    .catch(() => dispatch(enableDemoMode()));
+}

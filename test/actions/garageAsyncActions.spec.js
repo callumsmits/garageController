@@ -32,7 +32,14 @@ describe('garage async actions', function () {
       { type: types.TURN_ON_TIMEOUT, payload: 1 },
     ];
 
-    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'OFF',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.unsecureDoor())
       .then(() => {
         const storeActions = store.getActions();
@@ -59,7 +66,14 @@ describe('garage async actions', function () {
       { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.secureDoor())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -80,7 +94,14 @@ describe('garage async actions', function () {
       { type: types.DOOR_RELAY_REQUEST_COMPLETE, payload: { door: 1 } },
     ];
 
-    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'OFF',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.triggerDoorRelay())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -102,7 +123,14 @@ describe('garage async actions', function () {
       { type: types.MOVEMENT_TIMEOUT },
     ];
 
-    const store = mockStore({ secure: 'ON', door: 'CLOSED' });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.openDoor())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -124,7 +152,14 @@ describe('garage async actions', function () {
       { type: types.MOVEMENT_TIMEOUT },
     ];
 
-    const store = mockStore({ secure: 'ON', door: 'OPEN' });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.closeDoor())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -155,7 +190,14 @@ describe('garage async actions', function () {
       { type: types.MOVEMENT_TIMEOUT },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.unsecureAndOpenDoor())
       .then(() => {
         const storeActions = store.getActions();
@@ -189,7 +231,14 @@ describe('garage async actions', function () {
       { type: types.TURN_ON_TIMEOUT, payload: 1 },
     ];
 
-    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'OFF',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.unsecureAndOpenDoor())
       .then(() => {
         const storeActions = store.getActions();
@@ -225,7 +274,14 @@ describe('garage async actions', function () {
       { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.closeAndSecureDoor())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -264,7 +320,14 @@ describe('garage async actions', function () {
       { type: types.TURN_OFF_REQUEST_COMPLETE, payload: { secure: 1 } },
     ];
 
-    const store = mockStore({ secure: 'OFF', door: { position: 'CLOSED' } });
+    const store = mockStore({
+      secure: 'OFF',
+      door: {
+        position: 'CLOSED',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.closeAndSecureDoor())
       .then(() => {
         const storeActions = store.getActions();
@@ -298,7 +361,14 @@ describe('garage async actions', function () {
       { type: types.MOVEMENT_TIMEOUT },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'OPEN' } });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.closeAndSecureDoor())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -318,7 +388,14 @@ describe('garage async actions', function () {
       { type: types.MEASURED_DISTANCE, payload: 30 },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'OPEN' }, distanceRequest: 'NONE' });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.getDistance())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
@@ -351,11 +428,66 @@ describe('garage async actions', function () {
       { type: types.MEASURED_DISTANCE, payload: 30 },
     ];
 
-    const store = mockStore({ secure: 'ON', door: { position: 'OPEN' }, distanceRequest: 'NONE' });
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
     return store.dispatch(actions.startMonitoringDistance(1))
       // Delay here because startMonitoringDistance uses a timeout rather than promise
       // to avoid using promises in infinite loop
       .then(() => delay(20))
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  it('sends correct actions during getInitialSecureState action', function () {
+    nock(constants.garageDeviceAddress)
+      .get(constants.garageSecureStateURL)
+      .reply(200, {
+        secure: 1,
+      });
+
+    const expectedActions = [
+      { type: types.INITIAL_SET_SECURE_STATE, payload: 'OFF' },
+    ];
+
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
+    return store.dispatch(actions.getInitialSecureState())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
+
+  it('enables demo mode during getInitialSecureState action if there is a GET error', function () {
+    nock(constants.garageDeviceAddress)
+    .get()
+    .reply(200);
+
+    const expectedActions = [
+      { type: types.ENABLE_DEMO_MODE },
+    ];
+
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
+    return store.dispatch(actions.getInitialSecureState())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
