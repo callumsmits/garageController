@@ -7,10 +7,10 @@ import CurrentDemoIndicator from '../containers/currentDemoIndicator.jsx';
 
 const App = () => (
   <div>
-    <CurrentDemoIndicator />
     <Header />
     <CurrentStateDisplay />
     <CurrentStateChangeButton />
+    <CurrentDemoIndicator />
   </div>
 );
 
