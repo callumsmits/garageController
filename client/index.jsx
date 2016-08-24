@@ -13,8 +13,8 @@ let store = createStore(garageReducer, undefined, compose(
   )
 );
 
-// store.dispatch(startMonitoringDistance());
 store.dispatch(getInitialSecureState());
+store.dispatch(startMonitoringDistance());
 
 const root = document.createElement('div');
 document.body.appendChild(root);

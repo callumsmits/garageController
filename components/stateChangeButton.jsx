@@ -13,9 +13,9 @@ const StateChangeButton = ({ doorState, secureState, unsecureAndOpenDoor, closeA
     clickFunction = closeAndSecureDoor;
   }
 
-  let disabled = false;
-  if (!((doorState === 'OPEN') || (doorState === 'CLOSED'))) {
-    disabled = true;
+  let disabled = true;
+  if ((doorState === 'OPEN') || ((doorState === 'CLOSED') && (secureState === 'OFF'))) {
+    disabled = false;
   }
 
   return (

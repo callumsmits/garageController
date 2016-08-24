@@ -22,5 +22,8 @@ describe('<App />', function () {
       </Provider>
     );
     expect(wrapper.find('Header')).to.have.length(1);
+    expect(wrapper.find('DemoIndicator')).to.have.length(1);
+    expect(wrapper.find('StateDisplay')).to.have.length(1);
+    expect(wrapper.find('StateChangeButton')).to.have.length(1);
   });
 });

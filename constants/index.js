@@ -35,3 +35,11 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 export const garageInterDistanceMeasurementDelay = interDistanceMeasurementDelay;
+
+let acceptableTimeOut = 10000;
+if (process.env.NODE_ENV === 'test') {
+  acceptableTimeOut = 50;
+}
+
+export const acceptableTimeLimitForInitialRequest = acceptableTimeOut;
+
