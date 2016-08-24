@@ -492,6 +492,32 @@ describe('garage async actions', function () {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
   });
+
+  it('enables demo mode during getInitialSecureState action with an appropriate timeout on fetch', function () {
+    nock(constants.garageDeviceAddress)
+      .get(constants.garageSecureStateURL)
+      .delay(2000)
+      .reply(200, {
+        secure: 1,
+      });
+
+    const expectedActions = [
+      { type: types.ENABLE_DEMO_MODE },
+    ];
+
+    const store = mockStore({
+      secure: 'ON',
+      door: {
+        position: 'OPEN',
+      },
+      distanceRequest: 'NONE',
+      demo: false,
+    });
+    return store.dispatch(actions.getInitialSecureState())
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+  });
 });
 
 describe('garage async actions in demo mode', function () {

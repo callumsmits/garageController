@@ -222,8 +222,16 @@ export function startMonitoringDistance(iterations = -1) {
 }
 
 export function getInitialSecureState() {
-  return (dispatch) => fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`)
-    .then((res) => res.json())
+  return (dispatch) => {
+    const load = fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`);
+    return Promise.race([load, delay(constants.acceptableTimeLimitForInitialRequest)])
+    .then((res) => {
+      if (res instanceof Response) {
+        return res.json();
+      }
+      dispatch(enableDemoMode());
+      return {};
+    })
     .then((json) => {
       if (json.secure === 0) {
         dispatch(initialSetSecureState('ON'));
@@ -233,4 +241,5 @@ export function getInitialSecureState() {
       return json;
     })
     .catch(() => dispatch(enableDemoMode()));
+  };
 }
