@@ -73,6 +73,17 @@ describe('<StateChangeButton />', function () {
     expect(wrapperOpening.find('button').prop('disabled')).to.be.true;
   });
 
+  it('disables when doorState is closed and secureState is not secure', function () {
+    const propsOpening = {
+      doorState: 'CLOSED',
+      secureState: 'TURN_ON_REQUEST',
+      unsecureAndOpenDoor,
+      closeAndSecureDoor,
+    };
+    const wrapperOpening = shallow(<StateChangeButton {...propsOpening} />);
+    expect(wrapperOpening.find('button').prop('disabled')).to.be.true;
+  });
+
   it('is enabled when in open or closed doorState', function () {
     const props = {
       doorState: 'OPEN',

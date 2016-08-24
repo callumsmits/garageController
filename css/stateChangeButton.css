@@ -27,6 +27,14 @@
   text-decoration: none;
 }
 
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.btn:disabled:hover {
+  background: #ffffff;  
+}
+
 .box {
   padding: 40px 0 0 0;
   max-width: width;
