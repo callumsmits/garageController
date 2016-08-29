@@ -213,24 +213,4 @@ describe('garage door reducers', function () {
       door: { position: 'OPENING' },
     }));
   });
-/*  it('should convert state to UNKNOWN with DISTANCE action' +
-    ' below threshold only if in closed state', function () {
-    expect(garageReducer(generateTestState({
-      door: { position: 'CLOSED' },
-    }), {
-      type: 'MEASURED_DISTANCE',
-      payload: 10,
-    })).to.deep.equal(generateTestState({
-      door: { position: 'UNKNOWN' },
-    }));
-    expect(garageReducer(generateTestState({
-      door: { position: 'OPEN' },
-    }), {
-      type: 'MEASURED_DISTANCE',
-      payload: 10,
-    })).to.deep.equal(generateTestState({
-      door: { position: 'OPEN' },
-    }));
-  });
-  */
 });

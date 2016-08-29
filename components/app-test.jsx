@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import garageReducer from '../reducers/index.js';
 import App from './app.jsx';
 
-let store = createStore(garageReducer);
+const store = createStore(garageReducer);
 
 const expect = Chai.expect;
 Chai.use(sinonChai);

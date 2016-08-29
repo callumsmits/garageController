@@ -3,20 +3,12 @@ import React, { PropTypes } from 'react';
 import style from '../css/stateChangeButton.css';
 
 const StateChangeButton = ({ doorState, secureState, unsecureAndOpenDoor, closeAndSecureDoor }) => {
-  let buttonText = '';
-  let clickFunction = unsecureAndOpenDoor;
-  if (doorState === 'CLOSED') {
-    buttonText = 'Open door';
-    clickFunction = unsecureAndOpenDoor;
-  } else {
-    buttonText = 'Close door';
-    clickFunction = closeAndSecureDoor;
-  }
+  const isDoorClosed = (doorState === 'CLOSED');
+  const buttonText = isDoorClosed ? 'Open door' : 'Close door';
+  const clickFunction = isDoorClosed ? unsecureAndOpenDoor : closeAndSecureDoor;
 
-  let disabled = true;
-  if ((doorState === 'OPEN') || ((doorState === 'CLOSED') && (secureState === 'OFF'))) {
-    disabled = false;
-  }
+  const disabled = !((doorState === 'OPEN')
+    || ((doorState === 'CLOSED') && (secureState === 'OFF')));
 
   return (
     <div className={style.box}>

@@ -8,38 +8,12 @@ export const garageSecureStateURL = '/secureState';
 
 export const garageDistanceURL = '/distance';
 
-let turnOnDelay = 3000;
-if (process.env.NODE_ENV === 'test') {
-  turnOnDelay = 10;
-}
+export const garageSecureTurnOnDelay = (process.env.NODE_ENV === 'test') ? 10 : 3000;
 
-export const garageSecureTurnOnDelay = turnOnDelay;
+export const garageDoorMovementDelay = (process.env.NODE_ENV === 'test') ? 30 : 17000;
 
-let doorMovementDelay = 17000;
-if (process.env.NODE_ENV === 'test') {
-  doorMovementDelay = 30;
-}
+export const garageSecureToMoveDelay = (process.env.NODE_ENV === 'test') ? 10 : 1000;
 
-export const garageDoorMovementDelay = doorMovementDelay;
+export const garageInterDistanceMeasurementDelay = (process.env.NODE_ENV === 'test') ? 10 : 5000;
 
-let secureToMoveDelay = 1000;
-if (process.env.NODE_ENV === 'test') {
-  secureToMoveDelay = 10;
-}
-
-export const garageSecureToMoveDelay = secureToMoveDelay;
-
-let interDistanceMeasurementDelay = 5000;
-if (process.env.NODE_ENV === 'test') {
-  interDistanceMeasurementDelay = 10;
-}
-
-export const garageInterDistanceMeasurementDelay = interDistanceMeasurementDelay;
-
-let acceptableTimeOut = 10000;
-if (process.env.NODE_ENV === 'test') {
-  acceptableTimeOut = 50;
-}
-
-export const acceptableTimeLimitForInitialRequest = acceptableTimeOut;
-
+export const acceptableTimeLimitForInitialRequest = (process.env.NODE_ENV === 'test') ? 50 : 10000;

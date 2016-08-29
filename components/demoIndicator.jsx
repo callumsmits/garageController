@@ -4,10 +4,7 @@ import classNames from 'classnames';
 import styles from '../css/demo.css';
 
 const DemoIndicator = (demo) => {
-  let text = '';
-  if (demo.demo === true) {
-    text = 'Demo mode';
-  }
+  const text = (demo.demo === true) ? 'Demo mode' : '';
   const style = classNames({
     [`${styles.base}`]: true,
     [`${styles.fade}`]: true,

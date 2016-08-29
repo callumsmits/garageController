@@ -3,7 +3,13 @@ import garageReducer from '../../reducers';
 
 const expect = chai.expect;
 
-const reducerTestBaseConfig = { door: { position: 'CLOSED' }, distanceRequest: 'NONE', secure: 'OFF' };
+const reducerTestBaseConfig = {
+  door: {
+    position: 'CLOSED',
+  },
+  distanceRequest: 'NONE',
+  secure: 'OFF',
+};
 
 function generateTestState(demo) {
   return Object.assign({}, reducerTestBaseConfig, demo);
