@@ -4,57 +4,57 @@ import FontAwesome from './reactFontAwesome.jsx';
 import componentStyles from '../css/stateDisplay.css';
 
 const StateDisplay = ({ doorState, secureState }) => {
+  const stateText = (function doorStateToText() {
+    switch (doorState) {
+      case 'CLOSED':
+        return 'Closed';
+      case 'OPEN':
+        return 'Open';
+      case 'CLOSING':
+        return 'Closing';
+      case 'OPENING':
+        return 'Opening';
+      default:
+        return 'Unknown';
+    }
+  }());
 
-  let stateText = '';
-  switch (doorState) {
-    case 'CLOSED':
-      stateText = 'Closed';
-      break;
-    case 'OPEN':
-      stateText = 'Open';
-      break;
-    case 'CLOSING':
-      stateText = 'Closing';
-      break;
-    case 'OPENING':
-      stateText = 'Opening';
-      break;
-    default:
-      stateText = 'Unknown';
-  }
-
-  let divClass = componentStyles.intermediate;
-  const secureProps = {
-    name: 'question',
-  };
-  if (secureState.state) {
-    secureProps.name = 'circle-o-notch';
-    secureProps.spin = true;
-    divClass = componentStyles.intermediate;
-  } else {
+  const secureProps = (function secureStateToIconProps() {
+    if (secureState.state) {
+      return { name: 'circle-o-notch', spin: true };
+    }
     switch (secureState) {
       case 'ON':
-        secureProps.name = 'unlock';
-        divClass = componentStyles.unsecure;
-        break;
+        return { name: 'unlock' };
       case 'OFF':
-        secureProps.name = 'lock';
-        divClass = componentStyles.secure;
-        break;
+        return { name: 'lock' };
       case 'TURN_ON_REQUEST':
-        secureProps.name = 'circle-o-notch';
-        secureProps.spin = true;
-        divClass = componentStyles.intermediate;
-        break;
+        return { name: 'circle-o-notch', spin: true };
       case 'TURN_OFF_REQUEST':
-        secureProps.name = 'circle-o-notch';
-        secureProps.spin = true;
-        divClass = componentStyles.intermediate;
-        break;
+        return { name: 'circle-o-notch', spin: true };
       default:
+        return { name: 'question' };
     }
-  }
-  divClass += ` ${componentStyles.box}`;
+  }());
+
+  const divClassColour = (function secureStateToDivClassColour() {
+    if (secureState.state) {
+      return componentStyles.intermediate;
+    }
+    switch (secureState) {
+      case 'ON':
+        return componentStyles.unsecure;
+      case 'OFF':
+        return componentStyles.secure;
+      case 'TURN_ON_REQUEST':
+        return componentStyles.intermediate;
+      case 'TURN_OFF_REQUEST':
+        return componentStyles.intermediate;
+      default:
+        return componentStyles.intermediate;
+    }
+  }());
+  const divClass = `${divClassColour} ${componentStyles.box}`;
   return (
     <div className={divClass}>
       <div className={componentStyles.innerbox}>

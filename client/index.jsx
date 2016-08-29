@@ -7,7 +7,7 @@ import garageReducer from '../reducers/index.js';
 import App from '../components/app.jsx';
 import { startMonitoringDistance, getInitialSecureState } from '../actions';
 
-let store = createStore(garageReducer, undefined, compose(
+const store = createStore(garageReducer, undefined, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f
   )
