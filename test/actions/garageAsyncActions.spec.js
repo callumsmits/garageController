@@ -566,8 +566,10 @@ describe('garage async actions in demo mode', function () {
       distanceRequest: 'NONE',
       demo: true,
     });
-    store.dispatch(actions.secureDoor());
-    expect(store.getActions()).to.deep.equal(expectedActions);
+    return store.dispatch(actions.secureDoor())
+    .then(() => {
+      expect(store.getActions()).to.deep.equal(expectedActions);
+    });
   });
 
   it('sends correct actions after triggerDoorRelay request', function () {
@@ -584,8 +586,10 @@ describe('garage async actions in demo mode', function () {
       distanceRequest: 'NONE',
       demo: true,
     });
-    store.dispatch(actions.triggerDoorRelay());
-    expect(store.getActions()).to.deep.equal(expectedActions);
+    return store.dispatch(actions.triggerDoorRelay())
+    .then(() => {
+      expect(store.getActions()).to.deep.equal(expectedActions);
+    });
   });
 
   it('sends correct actions after openDoor request', function () {
