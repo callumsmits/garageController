@@ -40,6 +40,14 @@ function delay(ms) {
   });
 }
 
+function generateDelayThenJSONGeneratingFunction(json) {
+  return delay(constants.demoDelay)
+  .then(() => ({
+    json: () => json,
+  })
+  );
+}
+
 export function startTurnOnTimer(id) {
   return (dispatch) => delay(constants.garageSecureTurnOnDelay)
                         .then(() => dispatch(turnOnTimeout(id)));
@@ -47,25 +55,18 @@ export function startTurnOnTimer(id) {
 
 export function unsecureDoor() {
   return (dispatch, getState) => {
-    if (getState().demo) {
-      dispatch(turnOnRequest());
-
-      const timeId = Date.now();
-      dispatch(turnOnRequestComplete({
-        secure: 0,
-        id: timeId,
-      }));
-      return dispatch(startTurnOnTimer(timeId));
-    }
     dispatch(turnOnRequest());
 
     const timeId = Date.now();
-    return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        secure: 0,
-      }),
-    })
+    return (getState().demo ?
+      generateDelayThenJSONGeneratingFunction({ secure: 0, id: timeId }) :
+      fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          secure: 0,
+        }),
+      })
+    )
     .then((res) => res.json())
     .then((json) => {
       const request = json;
@@ -79,19 +80,17 @@ export function unsecureDoor() {
 
 export function secureDoor() {
   return (dispatch, getState) => {
-    if (getState().demo) {
-      dispatch(turnOffRequest());
-      dispatch(turnOffRequestComplete({ secure: 1 }));
-      return 0;
-    }
     dispatch(turnOffRequest());
 
-    return fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        secure: 1,
-      }),
-    })
+    return (getState().demo ?
+      generateDelayThenJSONGeneratingFunction({ secure: 1 }) :
+      fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          secure: 1,
+        }),
+      })
+    )
     .then((res) => res.json())
     .then((json) => {
       dispatch(turnOffRequestComplete(json));
@@ -102,19 +101,17 @@ export function secureDoor() {
 
 export function triggerDoorRelay() {
   return (dispatch, getState) => {
-    if (getState().demo) {
-      dispatch(doorRelayRequest());
-      dispatch(doorRelayRequestComplete({ door: 1 }));
-      return 0;
-    }
     dispatch(doorRelayRequest());
 
-    return fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        door: 1,
-      }),
-    })
+    return (getState().demo ?
+      generateDelayThenJSONGeneratingFunction({ door: 1 }) :
+      fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          door: 1,
+        }),
+      })
+    )
     .then((res) => res.json())
     .then((json) => {
       dispatch(doorRelayRequestComplete(json));
@@ -124,29 +121,15 @@ export function triggerDoorRelay() {
 }
 
 export function openDoor() {
-  return (dispatch, getState) => {
-    if (getState().demo) {
-      dispatch(triggerDoorRelay());
-      return delay(constants.garageDoorMovementDelay)
-      .then(() => dispatch(movementTimeout()));
-    }
-    return dispatch(triggerDoorRelay())
+  return (dispatch) => dispatch(triggerDoorRelay())
     .then(() => delay(constants.garageDoorMovementDelay))
     .then(() => dispatch(movementTimeout()));
-  };
 }
 
 export function closeDoor() {
-  return (dispatch, getState) => {
-    if (getState().demo) {
-      dispatch(triggerDoorRelay());
-      return delay(constants.garageDoorMovementDelay)
-    .then(() => dispatch(movementTimeout()));
-    }
-    return dispatch(triggerDoorRelay())
+  return (dispatch) => dispatch(triggerDoorRelay())
     .then(() => delay(constants.garageDoorMovementDelay))
     .then(() => dispatch(movementTimeout()));
-  };
 }
 
 export function unsecureAndOpenDoor() {
@@ -191,21 +174,20 @@ export function closeAndSecureDoor() {
 }
 
 export function getDistance() {
-  return (dispatch, getState) => {
-    if (getState().demo) {
-      return 0;
-    }
-    dispatch(distanceRequest());
-
-    return fetch(`${constants.garageDeviceAddress}${constants.garageDistanceURL}`)
-    .then((res) => res.json())
-    .then((json) => {
-      dispatch(distanceRequestComplete());
-      return json;
-    })
-    .catch(() => dispatch(distanceRequestComplete()))
-    .then((json) => dispatch(measuredDistance(json.distance)));
-  };
+  return (dispatch, getState) => (getState().demo ?
+    0 :
+    (function () {
+      dispatch(distanceRequest());
+      return fetch(`${constants.garageDeviceAddress}${constants.garageDistanceURL}`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(distanceRequestComplete());
+        return json;
+      })
+      .catch(() => dispatch(distanceRequestComplete()))
+      .then((json) => dispatch(measuredDistance(json.distance)));
+    }())
+  );
 }
 
 export function startMonitoringDistance(iterations = -1) {
