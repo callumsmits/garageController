@@ -17,5 +17,3 @@ export const garageSecureToMoveDelay = (process.env.NODE_ENV === 'test') ? 10 : 
 export const garageInterDistanceMeasurementDelay = (process.env.NODE_ENV === 'test') ? 10 : 5000;
 
 export const acceptableTimeLimitForInitialRequest = (process.env.NODE_ENV === 'test') ? 50 : 10000;
-
-export const demoDelay = 10;
