@@ -40,12 +40,12 @@ function delay(ms) {
   });
 }
 
-function generateDelayThenJSONGeneratingFunction(json) {
-  return delay(constants.demoDelay)
-  .then(() => ({
-    json: () => json,
-  })
-  );
+function promiseResolvingToJSONReturningFunction(json) {
+  return new Promise(function (resolve) {
+    resolve({
+      json: () => json,
+    });
+  });
 }
 
 export function startTurnOnTimer(id) {
@@ -59,7 +59,7 @@ export function unsecureDoor() {
 
     const timeId = Date.now();
     return (getState().demo ?
-      generateDelayThenJSONGeneratingFunction({ secure: 0, id: timeId }) :
+      promiseResolvingToJSONReturningFunction({ secure: 0, id: timeId }) :
       fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
         method: 'POST',
         body: JSON.stringify({
@@ -83,7 +83,7 @@ export function secureDoor() {
     dispatch(turnOffRequest());
 
     return (getState().demo ?
-      generateDelayThenJSONGeneratingFunction({ secure: 1 }) :
+      promiseResolvingToJSONReturningFunction({ secure: 1 }) :
       fetch(`${constants.garageDeviceAddress}${constants.garageSecureStateURL}`, {
         method: 'POST',
         body: JSON.stringify({
@@ -104,7 +104,7 @@ export function triggerDoorRelay() {
     dispatch(doorRelayRequest());
 
     return (getState().demo ?
-      generateDelayThenJSONGeneratingFunction({ door: 1 }) :
+      promiseResolvingToJSONReturningFunction({ door: 1 }) :
       fetch(`${constants.garageDeviceAddress}${constants.garageDoorStateURL}`, {
         method: 'POST',
         body: JSON.stringify({
